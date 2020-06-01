@@ -8,6 +8,14 @@ namespace twog
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D player;
+
+        int virtualWidth = 320;
+        int virtualHeight = 180;
+        int actualWidth = 640;
+        int actualHeight = 360;
+
+        RenderTarget2D renderTarget;
 
         public Game1()
         {
@@ -16,57 +24,51 @@ namespace twog
         }
 
         protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here
-
+        {   
             base.Initialize();
+            renderTarget = new RenderTarget2D(GraphicsDevice, virtualWidth, virtualHeight);
+
+            graphics.PreferredBackBufferWidth = actualWidth;  // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = actualHeight;   // set this value to the desired height of your window
+            graphics.ApplyChanges();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            player = Content.Load<Texture2D>("Assets/player-idle");
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
+
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
-
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.SetRenderTarget(renderTarget);
+            GraphicsDevice.Clear(Color.Black);
+            spriteBatch.Begin();
+            spriteBatch.Draw(player, new Vector2(0, 0), Color.White);
+            spriteBatch.Draw(player, new Vector2(virtualWidth/2, virtualHeight/2), Color.White);
+            spriteBatch.End();
 
-            // TODO: Add your drawing code here
+            GraphicsDevice.SetRenderTarget(null);
+           
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null);
+            spriteBatch.Draw(renderTarget, new Rectangle(0, 0, actualWidth, actualHeight), Color.White);
+            spriteBatch.End();
+
+            
 
             base.Draw(gameTime);
         }
