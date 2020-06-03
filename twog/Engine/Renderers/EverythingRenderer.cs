@@ -32,6 +32,10 @@ namespace MyEngine
             if (Engine.Commands.Open)
                 scene.Entities.DebugRender(Camera);
 
+#if DEBUG
+            scene.Entities.DebugRender(Camera);
+#endif
+
             Draw.SpriteBatch.End();
         }
 

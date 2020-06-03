@@ -9,7 +9,7 @@ using MyEngine;
 
 namespace twog
 {
-    public class TileIndexMap : Entity
+    public class TileIndexMap
     {
         private TileJson tileJson;
         public int[,] Indices;

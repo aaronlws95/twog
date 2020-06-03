@@ -24,8 +24,8 @@ namespace twog
         {
             if (add.X != 0 || add.Y != 0)
             {
-                X += add.X * 60f * Engine.DeltaTime;
-                Y += add.Y * 60f * Engine.DeltaTime;
+                X += add.X;
+                Y += add.Y;
             }
         }
     }

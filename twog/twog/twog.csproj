@@ -47,12 +47,14 @@
   <ItemGroup>
     <Compile Include="Background.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="TileIndexMap.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="Player\PlayerCamera.cs" />
+    <Compile Include="Player\PlayerCameraStaticBound.cs" />
+    <Compile Include="Tiles\TileIndexMap.cs" />
+    <Compile Include="Player\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GFX.cs" />
-    <Compile Include="TestScene.cs" />
+    <Compile Include="Scenes\TestScene.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
