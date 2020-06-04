@@ -41,9 +41,12 @@ namespace twog
             // use tilde to Open
             //Commands.Open = true;
 
+            int initGAccess = GAccess.HouseTag.ID;
+            initGAccess = GAccess.DoorTag.ID;
+            GFX graphicsInit = GFX.Instance;
+
             NarBox = new NarBox();
 
-            GFX graphicsInit = GFX.Instance;
             TestScene testScene = new TestScene();
             Scene = testScene;
         }

@@ -15,6 +15,8 @@ namespace twog
         Player player;
         Background background;
         PlayerCameraStaticBound camDebug;
+        House house;
+        Door door;
 
         public TestScene() : base()
         {
@@ -24,6 +26,12 @@ namespace twog
         public override void Begin()
         {
             base.Begin();
+
+            house = new House(new Vector2(5 * 16, 5 * 16));
+            Add(house);
+
+            door = new Door(new Vector2(house.X + 30, house.Y + 62), 21, 20);
+            Add(door);
 
             player = new Player(new Vector2(0, 0));
             Add(player);
@@ -45,7 +53,6 @@ namespace twog
         public override void Update()
         {
             base.Update();
-
             int move_x = MInput.Keyboard.AxisCheck(Keys.Left, Keys.Right);
             int move_y = MInput.Keyboard.AxisCheck(Keys.Up, Keys.Down);
 

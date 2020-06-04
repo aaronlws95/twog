@@ -11,7 +11,7 @@ namespace twog
 {
     public class NarBox
     {
-        private const float OPACITY = 1.0f;
+        private const float OPACITY = 0.9f;
         private static int screenWidth = Engine.ViewWidth;
         private static int screenHeight = Engine.ViewHeight;
         private static int narboxWidth = screenWidth / 4 + 20;
@@ -27,7 +27,7 @@ namespace twog
         public NarBox()
         {
             drawCommands = new List<Line>();
-            Log("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis egestas integer eget aliquet nibh praesent. Montes nascetur ridiculus mus mauris. Enim praesent elementum facilisis leo vel fringilla est ullamcorper eget. Eget lorem dolor sed viverra ipsum. Lectus proin nibh nisl condimentum id venenatis a condimentum vitae. At auctor urna nunc id. Ornare arcu odio ut sem nulla pharetra diam sit amet. Non odio euismod lacinia at quis risus sed vulputate. Augue ut lectus arcu bibendum. Urna molestie at elementum eu facilisis. Tortor at auctor urna nunc id cursus metus. Vel facilisis volutpat est velit egestas dui. Rhoncus dolor purus non enim. Auctor eu augue ut lectus arcu bibendum.", Color.White);
+            Log("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis egestas integer eget aliquet nibh praesent. Montes nascetur ridiculus mus mauris. Enim praesent elementum facilisis leo vel fringilla est ullamcorper eget. Eget lorem dolor sed viverra ipsum. Lectus proin nibh nisl condimentum id venenatis a condimentum vitae. At auctor urna nunc id. Ornare arcu odio ut sem nulla pharetra diam sit amet. Non odio euismod lacinia at quis risus sed vulputate. Augue ut lectus arcu bibendum. Urna molestie at elementum eu facilisis. Tortor at auctor urna nunc id cursus metus. Vel facilisis volutpat est velit egestas dui. Rhoncus dolor purus non enim. Auctor eu augue ut lectus arcu bibendum.", Color.Orange);
             Log("Hey don't mess with me, I got your money in a bag. A bag you know?", Color.DarkOrange);
         }
 
@@ -96,7 +96,7 @@ namespace twog
         {
 
             Draw.SpriteBatch.Begin();
-            Draw.Rect(narboxX, narboxY, narboxWidth, narboxHeight, Color.DarkSlateBlue * OPACITY);
+            Draw.Rect(narboxX, narboxY, narboxWidth, narboxHeight, Color.DarkBlue * OPACITY);
 
             if (drawCommands.Count > 0)
             {

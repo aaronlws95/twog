@@ -45,6 +45,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Logic\GAccess.cs" />
+    <Compile Include="House.cs" />
+    <Compile Include="Door.cs" />
     <Compile Include="NarBox\NarBox.cs" />
     <Compile Include="Tiles\Background.cs" />
     <Compile Include="Game1.cs" />

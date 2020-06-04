@@ -17,16 +17,30 @@ namespace twog
         public Player(Vector2 pos) : base(pos)
         {
             Sprite = GFX.SpriteBank.Create("player");
+            Collider = new Hitbox(16, 16, -8, -8);
             Add(Sprite);
         }
 
         public void Move(Vector2 add)
         {
-            
             if (add.X != 0 || add.Y != 0)
             {
-                X += add.X;
-                Y += add.Y;
+                if (CollideCheck(GAccess.HouseTag, new Vector2(X + add.X, Y)))
+                {
+                    while (!CollideCheck(GAccess.HouseTag, new Vector2(X + Calc.Sign(add).X, Y)))
+                        X += Calc.Sign(add).X;
+                }
+                else
+                    X += add.X;
+
+                if (CollideCheck(GAccess.HouseTag, new Vector2(X, Y + add.Y)))
+                {
+                    while (!CollideCheck(GAccess.HouseTag, new Vector2(X, Y + Calc.Sign(add).Y)))
+                        Y += Calc.Sign(add).Y;
+                }
+                else
+                    Y += add.Y;
+
             }
         }
     }
