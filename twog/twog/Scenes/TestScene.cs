@@ -58,7 +58,6 @@ namespace twog
         public override void AfterUpdate()
         {
             base.AfterUpdate();
-
         }
     }
 }

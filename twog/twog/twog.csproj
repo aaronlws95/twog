@@ -45,6 +45,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="NarBox\NarBox.cs" />
     <Compile Include="Tiles\Background.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Player\PlayerCamera.cs" />

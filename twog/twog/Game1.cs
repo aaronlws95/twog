@@ -18,8 +18,10 @@ namespace twog
     {
         private static int width = 320;
         private static int height = 180;
-        private static int windowWidth = 640;
-        private static int windowHeight = 360;
+        private static int windowWidth = 1280;
+        private static int windowHeight = 720;
+
+        public static NarBox NarBox { get; private set; }
 
         public Game1() : base(width, height, windowWidth, windowHeight, "twog", false)
         {
@@ -38,6 +40,8 @@ namespace twog
 
             // use tilde to Open
             //Commands.Open = true;
+
+            NarBox = new NarBox();
 
             GFX graphicsInit = GFX.Instance;
             TestScene testScene = new TestScene();
@@ -69,6 +73,7 @@ namespace twog
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            NarBox.UpdateClosed();
         }
 
         /// <summary>
@@ -78,6 +83,8 @@ namespace twog
         protected override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+            if (NarBox.Open)
+                NarBox.Render();
         }
 
     }

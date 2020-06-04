@@ -33,8 +33,8 @@ namespace twog
 
         private class TileJson
         {
-            public string Name;
-            public int[,] Indices;
+            public string Name { get; set; }
+            public int[,] Indices { get; set; }
         }
     }
 }
