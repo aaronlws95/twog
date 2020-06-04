@@ -47,8 +47,8 @@ namespace twog
 
             NarBox = new NarBox();
 
-            TestScene testScene = new TestScene();
-            Scene = testScene;
+            Scene0 scene0 = new Scene0();
+            Scene = scene0;
         }
 
         /// <summary>
@@ -76,7 +76,11 @@ namespace twog
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            NarBox.UpdateClosed();
+            //Debug Console
+            if (NarBox.Open)
+                NarBox.UpdateOpen();
+            else
+                NarBox.UpdateClosed();
         }
 
         /// <summary>
