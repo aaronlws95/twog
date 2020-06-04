@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using MyEngine;
 
 namespace twog
@@ -11,10 +12,11 @@ namespace twog
     {
         private Tileset tileSet;
 
-        public Background(string path)
+        public Background(string spritesheetPath, string mapPath)
         {
-            tileSet = new Tileset(GFX.SpriteBank.Create("tile").Texture, 16, 16);
-            TileIndexMap tileIndexMap = new TileIndexMap(path);
+            MTexture tileSpritesheet = MTexture.FromFile(Path.Combine(Engine.ContentDirectory, spritesheetPath));
+            tileSet = new Tileset(tileSpritesheet, 16, 16);
+            TileIndexMap tileIndexMap = new TileIndexMap(mapPath);
             TileGrid tileGrid = new TileGrid(16, 16, tileIndexMap.Indices.GetLength(0), tileIndexMap.Indices.GetLength(1));
             tileGrid.Populate(tileSet, tileIndexMap.Indices);
             Add(tileGrid);

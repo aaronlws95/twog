@@ -25,10 +25,10 @@ namespace twog
         {
             base.Begin();
 
-            player = new Player(new Vector2(Engine.Width / 2, Engine.Height / 2));
+            player = new Player(new Vector2(0, 0));
             Add(player);
 
-            background = new Background("Maps/test_map_1");
+            background = new Background("Sprites/Spritesheets/tile_spritesheet_0.png", "Maps/test_map_2");
             Add(background);
 
             EverythingRenderer er = new EverythingRenderer();

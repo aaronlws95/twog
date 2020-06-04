@@ -41,7 +41,7 @@ namespace MyEngine
         internal static void Initialize(GraphicsDevice graphicsDevice)
         {
             SpriteBatch = new SpriteBatch(graphicsDevice);
-            DefaultFont = Engine.Instance.Content.Load<SpriteFont>(@"MyEngine\MyEngineDefault");
+            DefaultFont = Engine.Instance.Content.Load<SpriteFont>(@"Fonts\monocle_default");
             UseDebugPixelTexture();
         }
 

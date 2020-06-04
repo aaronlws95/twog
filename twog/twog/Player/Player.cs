@@ -22,6 +22,7 @@ namespace twog
 
         public void Move(Vector2 add)
         {
+            
             if (add.X != 0 || add.Y != 0)
             {
                 X += add.X;

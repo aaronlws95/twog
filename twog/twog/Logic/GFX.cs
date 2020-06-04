@@ -49,8 +49,8 @@ namespace twog
         private void Initialize()
         {
             Atlases = new List<Atlas>();
-            Atlases.Add(Atlas.FromAtlas("Assets/twog-spritesheet-1", Atlas.AtlasDataFormat.CrunchXmlOrBinary));
-            spriteBank = new SpriteBank(Atlases[0], "SpriteData/spritedata.xml");
+            Atlases.Add(Atlas.FromAtlas("Sprites/Spritesheets/player_spritesheet_0", Atlas.AtlasDataFormat.CrunchXmlOrBinary));
+            spriteBank = new SpriteBank(Atlases[0], "Sprites/sprite_data_0.xml"); 
         }
 
     }

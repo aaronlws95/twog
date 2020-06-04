@@ -23,13 +23,19 @@ namespace twog
         {
             Vector2 playerPosRelativeToScreen = CameraToScreen(playerPosition);
             if (playerPosRelativeToScreen.X > Engine.Width / 2 + boundWidth / 2 ||
-                playerPosRelativeToScreen.X < Engine.Width / 2 - boundWidth / 2 ||
-                playerPosRelativeToScreen.Y > Engine.Height / 2 + boundHeight / 2 ||
-                playerPosRelativeToScreen.Y < Engine.Height / 2 - boundHeight / 2)
+                playerPosRelativeToScreen.X < Engine.Width / 2 - boundWidth / 2 )
             {
-                if (add.X != 0 || add.Y != 0)
+                if (add.X != 0)
                 {
                     X += add.X;
+                }
+            }
+
+            if (playerPosRelativeToScreen.Y > Engine.Height / 2 + boundHeight / 2 ||
+                playerPosRelativeToScreen.Y < Engine.Height / 2 - boundHeight / 2)
+            {
+                if (add.Y != 0)
+                {
                     Y += add.Y;
                 }
             }
