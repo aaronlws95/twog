@@ -18,14 +18,26 @@ namespace twog
     {
         private static int width = 320;
         private static int height = 180;
-        private static int windowWidth = 1280;
-        private static int windowHeight = 720;
+
+        // 4:3
+        //private static int windowWidth = 640;
+        //private static int windowHeight = 480;
+
+        // 16:9
+        //private static int windowWidth = 640;
+        //private static int windowHeight = 360;
+        //private static int windowWidth = 1024;
+        //private static int windowHeight = 576;
+        private static int windowWidth = 1600;
+        private static int windowHeight = 900;
+        //private static int windowWidth = 1920;
+        //private static int windowHeight = 1080;
 
         public static NarBox NarBox { get; private set; }
 
         public Game1() : base(width, height, windowWidth, windowHeight, "twog", false)
         {
-            
+            Window.AllowUserResizing = false;
         }
 
         /// <summary>

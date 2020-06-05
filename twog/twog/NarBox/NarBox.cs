@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MyEngine;
 
@@ -12,7 +13,13 @@ namespace twog
     public class NarBox
     {
         private const float OPACITY = 0.9f;
-        private Color Color = Color.Black;
+        private const float REPEAT_DELAY = .1f;
+        private const float REPEAT_EVERY = 1 / 30f;
+        private const int LINE_SPACE_Y = 30;
+        private const int MARGIN_X = 10;
+        private const int MARGIN_Y = 10;
+
+        public bool Open;
 
         private int screenWidth;
         private int screenHeight;
@@ -20,25 +27,51 @@ namespace twog
         private int narboxHeight;
         private int narboxX;
         private int narboxY;
+        private int maxLines;
         private KeyboardState oldState;
         private KeyboardState currentState;
-        
-        public bool Open;
-
+        private int scrollOffset = 0;
         private bool canOpen;
         private List<Line> drawCommands;
+        private Keys? repeatKey = null;
+        private float repeatCounter = 0;
+        private Color Color = Color.Black;
 
         public NarBox()
         {
-            screenWidth = Engine.ViewWidth;
-            screenHeight = Engine.ViewHeight;
-            narboxWidth = screenWidth / 4 + 20;
-            narboxHeight = screenHeight * 9 / 10;
-            narboxX = screenWidth - narboxWidth - 30;
-            narboxY = (screenHeight - narboxHeight) / 2;
+            UpdateDimensions();
             drawCommands = new List<Line>();
-            Log("Thou lettest man flow on like a river, and Thy years know no end. As for man, his days are like grass as a flower on the field, so he blossoms. For the wind passeth over it, and it is gone, and the place thereof shall know it no more.", Color.White);
-            Log("Perucho, don't you think the cannon might be a little bit rusty?", Color.Red);
+            Log("ANNETE - \"Why hello there\"", Color.White);
+            Log("1. Hi", Color.Red);
+            Log("2. Yo", Color.Red);
+            Log("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Color.Yellow);
+            Log("1. Hi", Color.Red);
+            Log("2. Yo", Color.Red);
+            Log("1. Hi", Color.Red);
+            Log("2. Yo", Color.Red);
+            Log("1. Hi", Color.Red);
+            Log("2. Yo", Color.Red);
+            Log("1. Hi", Color.Red);
+            Log("2. Yo", Color.Red);
+            Log("1. Hi", Color.Red);
+            Log("2. Yo", Color.Red);
+            Log("1. Hi", Color.Red);
+            Log("2. Yo", Color.Red);
+            Log("1. Hi", Color.Red);
+            Log("2. Yo", Color.Red);
+            Log("1. Hi", Color.Blue);
+            Log("2. Yo", Color.Blue);
+            Log("1. Hi", Color.Blue);
+            Log("2. Yo", Color.Blue);
+            Log("1. Hi", Color.Red);
+            Log("2. Yo", Color.Red);
+            Log("1. Hi", Color.Red);
+            Log("2. Yo", Color.Red);
+            Log("1. Hi", Color.Red);
+            Log("2. Yo", Color.Red);
+            Log("1. Hi", Color.Red);
+            Log("2. Yo", Color.Red);
+            Log("2. Yo", Color.Blue);
         }
 
         internal void UpdateClosed()
@@ -52,7 +85,7 @@ namespace twog
             }
         }
 
-        internal void UpdateOpen()
+        private void UpdateDimensions()
         {
             screenWidth = Engine.ViewWidth;
             screenHeight = Engine.ViewHeight;
@@ -60,9 +93,31 @@ namespace twog
             narboxHeight = screenHeight * 9 / 10;
             narboxX = screenWidth - narboxWidth - 30;
             narboxY = (screenHeight - narboxHeight) / 2;
+            maxLines = (narboxHeight - MARGIN_Y) / LINE_SPACE_Y;
+        }
+
+        internal void UpdateOpen()
+        {
+            UpdateDimensions();
 
             oldState = currentState;
             currentState = Keyboard.GetState();
+
+            if (repeatKey.HasValue)
+            {
+                if (currentState[repeatKey.Value] == KeyState.Down)
+                {
+                    repeatCounter += Engine.DeltaTime;
+
+                    while (repeatCounter >= REPEAT_DELAY)
+                    {
+                        HandleKey(repeatKey.Value);
+                        repeatCounter -= REPEAT_EVERY;
+                    }
+                }
+                else
+                    repeatKey = null;
+            }
 
             foreach (Keys key in currentState.GetPressedKeys())
             {
@@ -76,6 +131,12 @@ namespace twog
 
         private void HandleKey(Keys key)
         {
+            if (key == Keys.Q || key == Keys.W)
+            {
+                repeatKey = key;
+                repeatCounter = 0;
+            }
+
             switch (key)
             {
                 default:
@@ -83,6 +144,29 @@ namespace twog
                 case Keys.D1:
                     Open = canOpen = false;
                     break;
+                case Keys.Q:
+                    ScrollUp();
+                    break;
+                case Keys.W:
+                    ScrollDown();
+                    break;
+            }
+        }
+
+        private void ScrollUp()
+        {
+            if (scrollOffset != 0)
+            {
+                scrollOffset -= 1;
+            }
+        }
+
+        private void ScrollDown()
+        {
+            
+            if (scrollOffset < Math.Min(drawCommands.Count - maxLines, maxLines))
+            {
+                scrollOffset += 1;
             }
         }
 
@@ -100,7 +184,7 @@ namespace twog
             }
 
             //Split the string if you overflow horizontally
-            int maxWidth = narboxWidth - 10;
+            int maxWidth = narboxWidth - MARGIN_X;
             while (Draw.DefaultFont.MeasureString(str).X > maxWidth)
             {
                 int split = -1;
@@ -124,10 +208,14 @@ namespace twog
 
             drawCommands.Add(new Line(str, color));
 
-            //Don't overflow top of window
-            int maxCommands = narboxHeight / 30;
-            while (drawCommands.Count > maxCommands)
-                drawCommands.RemoveAt(0);
+            //Don't overflow bottom of window
+            int drawCommandsCount = drawCommands.Count;
+            scrollOffset = 0;
+            while (drawCommandsCount > maxLines)
+            {
+                drawCommandsCount -= 1;
+                scrollOffset += 1;
+            }
         }
 
         public void Log(object obj)
@@ -143,8 +231,15 @@ namespace twog
 
             if (drawCommands.Count > 0)
             {
-                for (int i = 0; i < drawCommands.Count; i++)
-                    Draw.SpriteBatch.DrawString(Draw.DefaultFont, drawCommands[i].Text, new Vector2(narboxX + 10, narboxY + 10 + (30 * i)), drawCommands[i].Color);
+                int lineNum = 0;
+                int lastLineNum = Math.Min(scrollOffset + maxLines, drawCommands.Count);
+                for (int i = scrollOffset; i < lastLineNum; i++)
+                {
+                    Draw.SpriteBatch.DrawString(Draw.DefaultFont, drawCommands[i].Text, new Vector2(narboxX + MARGIN_X, narboxY + MARGIN_Y + (LINE_SPACE_Y * lineNum)), drawCommands[i].Color,
+                            0f, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
+                    lineNum += 1;
+                }
+
             }
 
             Draw.SpriteBatch.End();

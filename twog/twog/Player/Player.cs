@@ -21,7 +21,7 @@ namespace twog
             Add(Sprite);
         }
 
-        public void Move(Vector2 add)
+        public void Move(Vector2 add, Vector2 minClamp, Vector2 maxClamp)
         {
             if (add.X != 0 || add.Y != 0)
             {
@@ -40,8 +40,10 @@ namespace twog
                 }
                 else
                     Y += add.Y;
-
             }
+
+            X = Math.Min(maxClamp.X - 8, Math.Max(minClamp.X + 8, X));
+            Y = Math.Min(maxClamp.Y - 8, Math.Max(minClamp.Y + 8, Y));
         }
     }
 }

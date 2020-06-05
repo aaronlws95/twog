@@ -52,9 +52,9 @@ namespace twog
             int move_x = MInput.Keyboard.AxisCheck(Keys.Left, Keys.Right);
             int move_y = MInput.Keyboard.AxisCheck(Keys.Up, Keys.Down);
 
-            player.Move(new Vector2(move_x, move_y));
+            player.Move(new Vector2(move_x, move_y), new Vector2(0, 0), new Vector2(background.Width, background.Height));
             playerInteractor.Move(new Vector2(player.Position.X, player.Position.Y), new Vector2(move_x, move_y));
-            camera.Move(new Vector2(move_x, move_y), player.Position);
+            camera.Move(new Vector2(move_x, move_y), player.Position, new Vector2(0, 0), new Vector2(background.Width, background.Height));
             Vector2 newScreenCenter = camera.ScreenToCamera(new Vector2(Engine.Width / 2, Engine.Height / 2));
             camDebug.Update(newScreenCenter);
         }

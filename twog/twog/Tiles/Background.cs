@@ -11,6 +11,8 @@ namespace twog
     public class Background : Entity
     {
         private Tileset tileSet;
+        public int Width;
+        public int Height;
 
         public Background(string spritesheetPath, string mapPath)
         {
@@ -21,6 +23,8 @@ namespace twog
             tileGrid.Populate(tileSet, tileIndexMap.Indices);
             Add(tileGrid);
             Depth = 1;
+            Width = tileIndexMap.Indices.GetLength(0) * 16;
+            Height = tileIndexMap.Indices.GetLength(1) * 16;
         }
     }
 
