@@ -16,6 +16,7 @@ namespace twog
 
         public static BitTag HouseTag = new BitTag("house");
         public static BitTag DoorTag = new BitTag("door");
+        public static BitTag CollideTag = new BitTag("collide");
 
         #endregion
 

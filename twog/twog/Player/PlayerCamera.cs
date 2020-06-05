@@ -19,6 +19,29 @@ namespace twog
             boundHeight = bHeight;
         }
 
+        public void Move(Vector2 add, Vector2 playerPosition)
+        {
+            Vector2 playerPosRelativeToScreen = CameraToScreen(playerPosition);
+
+            if (playerPosRelativeToScreen.X > Engine.Width / 2 + boundWidth / 2 ||
+                playerPosRelativeToScreen.X < Engine.Width / 2 - boundWidth / 2)
+            {
+                if (add.X != 0)
+                {
+                    X += add.X;
+                }
+            }
+
+            if (playerPosRelativeToScreen.Y > Engine.Height / 2 + boundHeight / 2 ||
+                playerPosRelativeToScreen.Y < Engine.Height / 2 - boundHeight / 2)
+            {
+                if (add.Y != 0)
+                {
+                    Y += add.Y;
+                }
+            }
+        }
+
         public void Move(Vector2 add, Vector2 playerPosition, Vector2 minClamp, Vector2 maxClamp)
         {
             Vector2 playerPosRelativeToScreen = CameraToScreen(playerPosition);

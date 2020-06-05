@@ -46,6 +46,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Logic\GAccess.cs" />
+    <Compile Include="Scenes\Scene2.cs" />
     <Compile Include="Tiles\House.cs" />
     <Compile Include="Tiles\Door.cs" />
     <Compile Include="NarBox\NarBox.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Player\PlayerCamera.cs" />
     <Compile Include="Player\PlayerCameraStaticBound.cs" />
+    <Compile Include="Tiles\ObjectMap.cs" />
     <Compile Include="Tiles\TileIndexMap.cs" />
     <Compile Include="Player\Player.cs" />
     <Compile Include="Program.cs" />

@@ -18,6 +18,7 @@ namespace twog
             Add(Sprite);
             Collider = new Hitbox(80, 80);
             Tag = GAccess.HouseTag;
+            AddTag(GAccess.CollideTag);
         }
 
 

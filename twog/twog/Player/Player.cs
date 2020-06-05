@@ -25,17 +25,17 @@ namespace twog
         {
             if (add.X != 0 || add.Y != 0)
             {
-                if (CollideCheck(GAccess.HouseTag, new Vector2(X + add.X, Y)))
+                if (CollideCheck(GAccess.CollideTag, new Vector2(X + add.X, Y)))
                 {
-                    while (!CollideCheck(GAccess.HouseTag, new Vector2(X + Calc.Sign(add).X, Y)))
+                    while (!CollideCheck(GAccess.CollideTag, new Vector2(X + Calc.Sign(add).X, Y)))
                         X += Calc.Sign(add).X;
                 }
                 else
                     X += add.X;
 
-                if (CollideCheck(GAccess.HouseTag, new Vector2(X, Y + add.Y)))
+                if (CollideCheck(GAccess.CollideTag, new Vector2(X, Y + add.Y)))
                 {
-                    while (!CollideCheck(GAccess.HouseTag, new Vector2(X, Y + Calc.Sign(add).Y)))
+                    while (!CollideCheck(GAccess.CollideTag, new Vector2(X, Y + Calc.Sign(add).Y)))
                         Y += Calc.Sign(add).Y;
                 }
                 else
@@ -45,5 +45,6 @@ namespace twog
             X = Math.Min(maxClamp.X - 8, Math.Max(minClamp.X + 8, X));
             Y = Math.Min(maxClamp.Y - 8, Math.Max(minClamp.Y + 8, Y));
         }
+
     }
 }

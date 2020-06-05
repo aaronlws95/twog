@@ -13,13 +13,15 @@ namespace twog
     {
         private TileJson tileJson;
         public int[,] Indices;
+        public bool[,] Collision;
         public string Name;
 
         public TileIndexMap(string path)
         {
             LoadJson(path);
             Name = tileJson.Name;
-            Indices = tileJson.Indices;
+            Indices = Calc.Transpose<int>(tileJson.Indices);
+            Collision = Calc.Transpose<bool>(tileJson.Collision);
         }
 
         private void LoadJson(string path)
@@ -35,6 +37,7 @@ namespace twog
         {
             public string Name { get; set; }
             public int[,] Indices { get; set; }
+            public bool[,] Collision { get; set; }
         }
     }
 }

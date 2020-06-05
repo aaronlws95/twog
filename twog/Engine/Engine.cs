@@ -314,8 +314,8 @@ namespace MyEngine
         /// </summary>
         protected virtual void OnSceneTransition(Scene from, Scene to)
         {
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+            //GC.Collect();
+            //GC.WaitForPendingFinalizers();
 
             TimeRate = 1f;
         }

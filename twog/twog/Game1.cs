@@ -33,6 +33,9 @@ namespace twog
         //private static int windowWidth = 1920;
         //private static int windowHeight = 1080;
 
+        public static List<Scene> Scenes;
+        public static Player Player;
+
         public static NarBox NarBox { get; private set; }
 
         public Game1() : base(width, height, windowWidth, windowHeight, "twog", false)
@@ -50,17 +53,33 @@ namespace twog
         {
             base.Initialize();
 
-            // use tilde to Open
-            //Commands.Open = true;
+            Commands.Enabled = false;
 
-            int initGAccess = GAccess.HouseTag.ID;
-            initGAccess = GAccess.DoorTag.ID;
+            int initGAccess = GAccess.CollideTag.ID;
             GFX graphicsInit = GFX.Instance;
 
             NarBox = new NarBox();
 
-            Scene0 scene0 = new Scene0();
-            Scene = scene0;
+            Player = new Player(new Vector2(10 * 16, 10 * 16));
+            Scene = new Scene0();
+        }
+
+        protected override void OnSceneTransition(Scene from, Scene to)
+        {
+            base.OnSceneTransition(from, to);
+
+            if (from != null && to != null)
+            {
+                if (from.Name == "Scene0" && to.Name == "Scene1")
+                {
+                    Player.Position = new Vector2(6 * 16 - 8, 11 * 16 - 8);
+                }
+
+                else if (from.Name == "Scene1" && to.Name == "Scene0")
+                {
+                    Player.Position = new Vector2(9 * 16 - 8, 8 * 16 - 8);
+                }
+            }
         }
 
         /// <summary>

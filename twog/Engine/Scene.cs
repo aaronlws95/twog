@@ -7,9 +7,11 @@ namespace MyEngine
 {
     public class Scene : IEnumerable<Entity>, IEnumerable
     {
+        
         public bool Paused;
         public float TimeActive;
         public float RawTimeActive;
+        public string Name { get; protected set; }
         public bool Focused { get; private set; }
         public EntityList Entities { get; private set; }
         public TagLists TagLists { get; private set; }
@@ -18,7 +20,7 @@ namespace MyEngine
         public Tracker Tracker { get; private set; }
 
         private Dictionary<int, double> actualDepthLookup;
-
+        
         public event Action OnEndOfFrame;
 
         public Scene()
