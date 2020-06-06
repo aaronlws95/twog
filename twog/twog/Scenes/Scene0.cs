@@ -15,7 +15,8 @@ namespace twog
         private Player player;
         private Background background;
         private PlayerCameraStaticBound camDebug;
-        private House house;
+        private House house0;
+        private House house1;
         private Door door;
         private PlayerInteractor playerInteractor;
         private EverythingRenderer er;
@@ -32,10 +33,13 @@ namespace twog
             background = new Background("Sprites/Spritesheets/tile_spritesheet_0.png", "Maps/bg_map_scene0");
             Add(background);
 
-            house = new House(new Vector2(6 * 16, 2 * 16));
-            Add(house);
+            house1 = new House(1, new Vector2(6 * 16, 2 * 16));
+            Add(house1);
 
-            door = new Door(new Vector2(house.X + 30, house.Y + 62), 21, 17, new Scene1());
+            house0 = new House(0, new Vector2(15 * 16, 2 * 16));
+            Add(house0);
+
+            door = new Door(new Vector2(house1.X + 30, house1.Y + 62), 21, 17, new Scene1());
             Add(door);
 
             player = Game1.Player;

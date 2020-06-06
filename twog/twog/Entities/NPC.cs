@@ -8,20 +8,20 @@ using MyEngine;
 
 namespace twog
 {
-    public class House : Entity
+    [Tracked]
+    public class NPC : Entity
     {
         public Sprite Sprite;
+        public string Name { get; private set; }
 
-        public House(Vector2 pos) : base(pos)
+        public NPC(string name, Vector2 pos) : base(pos)
         {
-            Sprite = GFX.SpriteBank.Create("house_1");
+            Name = name;
+            Sprite = GFX.SpriteBank.Create(name);
+            Collider = new Hitbox(16, 16, 0, 0);
             Add(Sprite);
-            Collider = new Hitbox(80, 80);
-            Tag = GAccess.HouseTag;
+            Tag = GAccess.NPCTag;
             AddTag(GAccess.CollideTag);
         }
-
-
-
     }
 }

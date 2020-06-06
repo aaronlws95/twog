@@ -19,7 +19,9 @@ namespace twog
         private PlayerInteractor playerInteractor;
         private ObjectMap objectMap;
         private Door door;
-        EverythingRenderer er;
+        private EverythingRenderer er;
+        private NPC aisya;
+
 
         public Scene1()
         {
@@ -54,6 +56,9 @@ namespace twog
             Vector2 newScreenCenter = camera.ScreenToCamera(new Vector2(Engine.Width / 2, Engine.Height / 2));
             camDebug = new PlayerCameraStaticBound(newScreenCenter, Engine.Width * 1 / 3, Engine.Height * 1 / 3);
             Add(camDebug);
+
+            aisya = new NPC("aisya", new Vector2(5 * 16, 3 * 16));
+            Add(aisya);
         }
 
         public override void Update()

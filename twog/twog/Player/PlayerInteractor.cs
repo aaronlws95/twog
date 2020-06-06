@@ -25,6 +25,12 @@ namespace twog
                 {
                     Engine.Scene = door.NextScene;
                 }
+
+                NPC npc = CollideFirst<NPC>();
+                if (npc != null)
+                {
+                    Console.WriteLine("hi");
+                }
             }
         }
 

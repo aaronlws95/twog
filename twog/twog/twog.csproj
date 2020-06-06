@@ -45,10 +45,11 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Entities\NPC.cs" />
     <Compile Include="Logic\GAccess.cs" />
     <Compile Include="Scenes\Scene2.cs" />
-    <Compile Include="Tiles\House.cs" />
-    <Compile Include="Tiles\Door.cs" />
+    <Compile Include="Entities\House.cs" />
+    <Compile Include="Entities\Door.cs" />
     <Compile Include="NarBox\NarBox.cs" />
     <Compile Include="Player\PlayerInteractor.cs" />
     <Compile Include="Scenes\Scene1.cs" />
