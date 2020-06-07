@@ -29,7 +29,8 @@ namespace twog
                 NPC npc = CollideFirst<NPC>();
                 if (npc != null)
                 {
-                    Console.WriteLine("hi");
+                    npc.StartDialogue();
+                    Game1.Player.StateMachine.State = twog.Player.StStationary;
                 }
             }
         }

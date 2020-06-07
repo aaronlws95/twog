@@ -37,6 +37,7 @@ namespace twog
         public static Player Player;
 
         public static NarBox NarBox { get; private set; }
+        public static Dictionary<string, NPC> NPCDict { get; private set; }
 
         public Game1() : base(width, height, windowWidth, windowHeight, "twog", false)
         {
@@ -57,8 +58,14 @@ namespace twog
 
             int initGAccess = GAccess.CollideTag.ID;
             GFX graphicsInit = GFX.Instance;
+            DialogueData dialogueInit = DialogueData.Instance;
 
             NarBox = new NarBox();
+
+            NPCDict = new Dictionary<string, NPC>();
+            NPC aisya = new NPC("Aisya");
+            aisya.CoDialogue = new CoDialogue("SCENE1001AISYA");
+            NPCDict.Add("Aisya", aisya);
 
             Player = new Player(new Vector2(10 * 16, 10 * 16));
             Scene = new Scene0();

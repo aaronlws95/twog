@@ -45,6 +45,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Dialogue\CoDialogue.cs" />
+    <Compile Include="Dialogue\DialogueInfo.cs" />
+    <Compile Include="Dialogue\DialogueData.cs" />
     <Compile Include="Entities\NPC.cs" />
     <Compile Include="Logic\GAccess.cs" />
     <Compile Include="Scenes\Scene2.cs" />

@@ -41,44 +41,14 @@ namespace twog
         {
             UpdateDimensions();
             drawCommands = new List<Line>();
-            Log("ANNETE - \"Why hello there\"", Color.White);
-            Log("1. Hi", Color.Red);
-            Log("2. Yo", Color.Red);
-            Log("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Color.Yellow);
-            Log("1. Hi", Color.Red);
-            Log("2. Yo", Color.Red);
-            Log("1. Hi", Color.Red);
-            Log("2. Yo", Color.Red);
-            Log("1. Hi", Color.Red);
-            Log("2. Yo", Color.Red);
-            Log("1. Hi", Color.Red);
-            Log("2. Yo", Color.Red);
-            Log("1. Hi", Color.Red);
-            Log("2. Yo", Color.Red);
-            Log("1. Hi", Color.Red);
-            Log("2. Yo", Color.Red);
-            Log("1. Hi", Color.Red);
-            Log("2. Yo", Color.Red);
-            Log("1. Hi", Color.Blue);
-            Log("2. Yo", Color.Blue);
-            Log("1. Hi", Color.Blue);
-            Log("2. Yo", Color.Blue);
-            Log("1. Hi", Color.Red);
-            Log("2. Yo", Color.Red);
-            Log("1. Hi", Color.Red);
-            Log("2. Yo", Color.Red);
-            Log("1. Hi", Color.Red);
-            Log("2. Yo", Color.Red);
-            Log("1. Hi", Color.Red);
-            Log("2. Yo", Color.Red);
-            Log("2. Yo", Color.Blue);
+            Log("Welcome to Nazarek. I hope you enjoy your stay.", Color.White, true);
         }
 
         internal void UpdateClosed()
         {
             if (!canOpen)
                 canOpen = true;
-            else if (MInput.Keyboard.Pressed(Keys.D1))
+            else if (MInput.Keyboard.Pressed(Keys.OemTilde))
             {
                 Open = true;
                 currentState = Keyboard.GetState();
@@ -141,7 +111,7 @@ namespace twog
             {
                 default:
                     break;
-                case Keys.D1:
+                case Keys.OemTilde:
                     Open = canOpen = false;
                     break;
                 case Keys.Q:
@@ -168,6 +138,13 @@ namespace twog
             {
                 scrollOffset += 1;
             }
+        }
+
+        public void Log(object obj, Color color, bool logBreak)
+        {
+            Log(obj, color);
+            if (logBreak)
+                Log("");
         }
 
         public void Log(object obj, Color color)
@@ -223,7 +200,6 @@ namespace twog
             Log(obj, Color.White);
         }
 
-
         internal void Render()
         {
             Draw.SpriteBatch.Begin();
@@ -245,21 +221,48 @@ namespace twog
             Draw.SpriteBatch.End();
         }
 
+        public void FadeAllLines()
+        {
+            for (int i = 0; i < drawCommands.Count; i++)
+            {
+                if (!drawCommands[i].Faded)
+                {
+                    drawCommands[i] = new Line(drawCommands[i].Text, drawCommands[i].Color * 0.4f, true);
+                }
+
+            }
+        }
+
+        public void ClearLog()
+        {
+            drawCommands = new List<Line>();
+        }
+
         private struct Line
         {
             public string Text;
             public Color Color;
+            public bool Faded;
 
             public Line(string text)
             {
                 Text = text;
                 Color = Color.White;
+                Faded = false;
             }
 
             public Line(string text, Color color)
             {
                 Text = text;
                 Color = color;
+                Faded = false;
+            }
+
+            public Line(string text, Color color, bool faded)
+            {
+                Text = text;
+                Color = color;
+                Faded = faded;
             }
         }
     }

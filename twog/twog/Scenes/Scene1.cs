@@ -20,8 +20,6 @@ namespace twog
         private ObjectMap objectMap;
         private Door door;
         private EverythingRenderer er;
-        private NPC aisya;
-
 
         public Scene1()
         {
@@ -57,7 +55,8 @@ namespace twog
             camDebug = new PlayerCameraStaticBound(newScreenCenter, Engine.Width * 1 / 3, Engine.Height * 1 / 3);
             Add(camDebug);
 
-            aisya = new NPC("aisya", new Vector2(5 * 16, 3 * 16));
+            NPC aisya = Game1.NPCDict["Aisya"];
+            aisya.Position = new Vector2(5 * 16, 3 * 16);
             Add(aisya);
         }
 
