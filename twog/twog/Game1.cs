@@ -38,6 +38,7 @@ namespace twog
 
         public static NarBox NarBox { get; private set; }
         public static Dictionary<string, NPC> NPCDict { get; private set; }
+        public CoDialogue GameDialogue { get; set; }
 
         public Game1() : base(width, height, windowWidth, windowHeight, "twog", false)
         {
@@ -56,7 +57,7 @@ namespace twog
 
             Commands.Enabled = false;
 
-            int initGAccess = GAccess.CollideTag.ID;
+            int initGAccess = GAccess.SolidTag.ID;
             GFX graphicsInit = GFX.Instance;
             DialogueData dialogueInit = DialogueData.Instance;
 
@@ -69,6 +70,9 @@ namespace twog
 
             Player = new Player(new Vector2(10 * 16, 10 * 16));
             Scene = new Scene0();
+
+            GameDialogue = new CoDialogue("SCENE0001INTRO");
+            GameDialogue.StartDialogue();
         }
 
         protected override void OnSceneTransition(Scene from, Scene to)
@@ -117,8 +121,11 @@ namespace twog
             //Debug Console
             if (NarBox.Open)
                 NarBox.UpdateOpen();
-            else
-                NarBox.UpdateClosed();
+            //else
+            //    NarBox.UpdateClosed();
+
+            if (GameDialogue.Activated)
+                GameDialogue.Update();
         }
 
         /// <summary>

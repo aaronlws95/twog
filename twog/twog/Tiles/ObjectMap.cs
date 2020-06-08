@@ -33,7 +33,7 @@ namespace twog
             GridHeight = tileIndexMap.Indices.GetLength(1) * 16;
 
             Collider = new Grid(16, 16, tileIndexMap.Collision);
-            Tag = GAccess.CollideTag;
+            Tag = GAccess.SolidTag;
         }
     }
 

@@ -14,7 +14,6 @@ namespace twog
         public Sprite Sprite;
         public string Name { get; private set; }
         public CoDialogue CoDialogue { get; set; }
-        private bool dialogueRunning = false;
 
         public NPC(string name) :base()
         {
@@ -23,7 +22,7 @@ namespace twog
             Collider = new Hitbox(16, 16, 0, 0);
             Add(Sprite);
             Tag = GAccess.NPCTag;
-            AddTag(GAccess.CollideTag);
+            AddTag(GAccess.SolidTag);
         }
 
         public NPC(string name, Vector2 pos) : base(pos)
@@ -33,26 +32,30 @@ namespace twog
             Collider = new Hitbox(16, 16, 0, 0);
             Add(Sprite);
             Tag = GAccess.NPCTag;
-            AddTag(GAccess.CollideTag);
+            AddTag(GAccess.SolidTag);
         }
 
         public void StartDialogue()
         {
-            if (!dialogueRunning)
-            {
-                Game1.NarBox.Open = true;
-                CoDialogue.StartDialogue();
-                dialogueRunning = true;
-            }
+            CoDialogue.StartDialogue();
         }
 
         public override void Update()
         {
             base.Update();
-            if (dialogueRunning)
+
+            if (CoDialogue != null)
             {
-                CoDialogue.Update();
-                dialogueRunning = CoDialogue.Running;
+                PlayerInteractor playerInteractor = Scene.Tracker.GetComponent<PlayerInteractor>();
+                if (playerInteractor.Check(this) && !CoDialogue.Activated)
+                {
+                    StartDialogue();
+                }
+
+                if (CoDialogue.Activated)
+                {
+                    CoDialogue.Update();
+                }
             }
         }
     }

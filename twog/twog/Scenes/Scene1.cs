@@ -9,68 +9,42 @@ using MyEngine;
 
 namespace twog
 {
-    class Scene1 : Scene
+    class Scene1 : Level
     {
-
-        private PlayerCamera camera;
-        private Player player;
-        private Background background;
-        private PlayerCameraStaticBound camDebug;
-        private PlayerInteractor playerInteractor;
-        private ObjectMap objectMap;
-        private Door door;
-        private EverythingRenderer er;
-
         public Scene1()
         {
             Name = "Scene1";
+            BoundCamera = false;
         }
 
         public override void Begin()
         {
             base.Begin();
 
-            background = new Background("Sprites/Spritesheets/tile_spritesheet_0.png", "Maps/bg_map_scene1");
-            Add(background);
+            Background = new Background("Sprites/Spritesheets/tile_spritesheet_0.png", "Maps/bg_map_scene1");
+            Add(Background);
 
-            objectMap = new ObjectMap("Sprites/Spritesheets/tile_spritesheet_0.png", "Maps/object_map_scene1");
+            ObjectMap objectMap = new ObjectMap("Sprites/Spritesheets/tile_spritesheet_0.png", "Maps/object_map_scene1");
             Add(objectMap);
 
-            door = new Door(new Vector2(5 * 16, 11 * 16), 16, 16, new Scene0());
+            Door door = new Door(new Vector2(5 * 16, 11 * 16), 16, 16, new Scene0());
             Add(door);
 
-            player = Game1.Player;
-            Add(player);
+            Add(Game1.Player);
 
-            playerInteractor = new PlayerInteractor(new Vector2(player.Position.X, player.Position.Y + 16));
-            Add(playerInteractor);
-
-            er = new EverythingRenderer();
-            camera = new PlayerCamera(640, 360, Engine.Width * 1 / 3, Engine.Height * 1 / 3);
-            camera.Position = new Vector2(player.Position.X - Engine.Width / 2, player.Position.Y - Engine.Height / 2);
-            er.Camera = camera;
+            EverythingRenderer er = new EverythingRenderer();
+            Camera = new PlayerCamera(640, 360, Engine.Width * 1 / 3, Engine.Height * 1 / 3);
+            Camera.Position = new Vector2(Game1.Player.Position.X - Engine.Width / 2, Game1.Player.Position.Y - Engine.Height / 2);
+            er.Camera = Camera;
             Add(er);
 
-            Vector2 newScreenCenter = camera.ScreenToCamera(new Vector2(Engine.Width / 2, Engine.Height / 2));
-            camDebug = new PlayerCameraStaticBound(newScreenCenter, Engine.Width * 1 / 3, Engine.Height * 1 / 3);
+            Vector2 newScreenCenter = Camera.ScreenToCamera(new Vector2(Engine.Width / 2, Engine.Height / 2));
+            PlayerCameraStaticBound camDebug = new PlayerCameraStaticBound(newScreenCenter, Engine.Width * 1 / 3, Engine.Height * 1 / 3);
             Add(camDebug);
 
             NPC aisya = Game1.NPCDict["Aisya"];
             aisya.Position = new Vector2(5 * 16, 3 * 16);
             Add(aisya);
-        }
-
-        public override void Update()
-        {
-            base.Update();
-            int move_x = MInput.Keyboard.AxisCheck(Keys.Left, Keys.Right);
-            int move_y = MInput.Keyboard.AxisCheck(Keys.Up, Keys.Down);
-
-            player.Move(new Vector2(move_x, move_y), new Vector2(0, 0), new Vector2(background.GridWidth, background.GridHeight));
-            playerInteractor.Move(new Vector2(player.Position.X, player.Position.Y), new Vector2(move_x, move_y));
-            camera.Move(new Vector2(move_x, move_y), player.Position);
-            Vector2 newScreenCenter = camera.ScreenToCamera(new Vector2(Engine.Width / 2, Engine.Height / 2));
-            camDebug.Update(newScreenCenter);
         }
     }
 }

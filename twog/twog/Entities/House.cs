@@ -30,7 +30,7 @@ namespace twog
             Add(Sprite);
 
             Tag = GAccess.HouseTag;
-            AddTag(GAccess.CollideTag);
+            AddTag(GAccess.SolidTag);
         }
 
 

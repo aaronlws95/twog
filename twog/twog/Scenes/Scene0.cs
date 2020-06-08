@@ -9,68 +9,48 @@ using MyEngine;
 
 namespace twog
 {
-    class Scene0 : Scene
+    class Scene0 : Level
     {
-        private PlayerCamera camera;
-        private Player player;
-        private Background background;
-        private PlayerCameraStaticBound camDebug;
-        private House house0;
-        private House house1;
-        private Door door;
-        private PlayerInteractor playerInteractor;
-        private EverythingRenderer er;
-
         public Scene0() : base()
         {
             Name = "Scene0";
+            BoundCamera = true;
         }
 
         public override void Begin()
         {
             base.Begin();
 
-            background = new Background("Sprites/Spritesheets/tile_spritesheet_0.png", "Maps/bg_map_scene0");
-            Add(background);
+            Background = new Background("Sprites/Spritesheets/tile_spritesheet_0.png", "Maps/bg_map_scene0");
+            Add(Background);
 
-            house1 = new House(1, new Vector2(6 * 16, 2 * 16));
+            House house1 = new House(1, new Vector2(6 * 16, 2 * 16));
             Add(house1);
 
-            house0 = new House(0, new Vector2(15 * 16, 2 * 16));
+            House house0 = new House(0, new Vector2(15 * 16, 2 * 16));
             Add(house0);
 
-            door = new Door(new Vector2(house1.X + 30, house1.Y + 62), 21, 17, new Scene1());
-            Add(door);
+            Door door0 = new Door(new Vector2(house0.X + 16, house0.Y + 16 * 4), 16, 16);
+            CoDialogue coDialogueDoor0 = new CoDialogue("LOCKED001DOOR");
+            Add(door0);
 
-            player = Game1.Player;
-            Add(player);
+            Door door1 = new Door(new Vector2(house1.X + 30, house1.Y + 62), 21, 17, new Scene1());
+            Add(door1);
 
-            playerInteractor = new PlayerInteractor(new Vector2(player.Position.X, player.Position.Y + 16));
-            Add(playerInteractor);
+            Add(Game1.Player);
 
-            er = new EverythingRenderer();
-            camera = new PlayerCamera(640, 360, Engine.Width * 1 / 3, Engine.Height * 1 / 3);
-            camera.Position = new Vector2(player.Position.X - Engine.Width / 2, player.Position.Y - Engine.Height / 2);
-            er.Camera = camera;
+            EverythingRenderer er = new EverythingRenderer();
+            Camera = new PlayerCamera(640, 360, Engine.Width * 1 / 3, Engine.Height * 1 / 3);
+            Camera.Position = new Vector2(Game1.Player.Position.X - Engine.Width / 2, Game1.Player.Position.Y - Engine.Height / 2);
+            er.Camera = Camera;
             Add(er);
 
-            Vector2 newScreenCenter = camera.ScreenToCamera(new Vector2(Engine.Width / 2, Engine.Height / 2));
-            camDebug = new PlayerCameraStaticBound(newScreenCenter, Engine.Width * 1 / 3, Engine.Height * 1 / 3);
+            Vector2 newScreenCenter = Camera.ScreenToCamera(new Vector2(Engine.Width / 2, Engine.Height / 2));
+            PlayerCameraStaticBound camDebug = new PlayerCameraStaticBound(newScreenCenter, Engine.Width * 1 / 3, Engine.Height * 1 / 3);
             Add(camDebug);
-        }
 
-        public override void Update()
-        {
-            base.Update();
-
-            int move_x = MInput.Keyboard.AxisCheck(Keys.Left, Keys.Right);
-            int move_y = MInput.Keyboard.AxisCheck(Keys.Up, Keys.Down);
-
-            player.Move(new Vector2(move_x, move_y), new Vector2(0, 0), new Vector2(background.GridWidth, background.GridHeight));
-            playerInteractor.Move(new Vector2(player.Position.X, player.Position.Y), new Vector2(move_x, move_y));
-            camera.Move(new Vector2(move_x, move_y), player.Position, new Vector2(0, 0), new Vector2(background.GridWidth, background.GridHeight));
-            Vector2 newScreenCenter = camera.ScreenToCamera(new Vector2(Engine.Width / 2, Engine.Height / 2));
-            camDebug.Update(newScreenCenter);
+            Monsters monster = new Monsters("zaletos", new Vector2(15 * 16, 15 * 16));
+            Add(monster);
         }
     }
 }

@@ -10,15 +10,16 @@ using MyEngine;
 
 namespace twog
 {
-    public class CoDialogue
+    public class CoDialogue : Component
     {
         public string DialogueState { get; set; }
         private Coroutine dialogueCoroutine;
+        public bool Activated { get; private set; }
         public bool Running { get; private set; }
         private int optionChoice;
         private int leaveChoiceNum;
 
-        public CoDialogue(string dialogueState)
+        public CoDialogue(string dialogueState) : base(true, false)
         {
             DialogueState = dialogueState;
             Running = false;
@@ -26,11 +27,15 @@ namespace twog
 
         public void StartDialogue()
         {
+            Game1.NarBox.Open = true;
+            Activated = true;
             dialogueCoroutine = new Coroutine(DisplayDialogue(DialogueState));
+            Game1.Player.EnterDialogue();
         }
 
-        public void Update()
+        public override void Update()
         {
+            base.Update();
             dialogueCoroutine.Update();
         }
 
@@ -49,9 +54,6 @@ namespace twog
                 string text = dialogueInfo.Text;
                 string[] options = dialogueInfo.Options;
 
-                // fade all previous text
-                Game1.NarBox.FadeAllLines();
-
                 // log character dialogue
                 Game1.NarBox.Log(character.ToUpper() + " -- \"" + text + "\"", Color.Red);
                 for (int i = 0; i < options.GetLength(0); i++)
@@ -60,7 +62,7 @@ namespace twog
                 }
                 if (dialogueInfo.CanEnd)
                 {
-                    Game1.NarBox.Log(options.GetLength(0) + 1 + ". Leave", Color.Yellow);
+                    Game1.NarBox.Log(options.GetLength(0) + 1 + ". End", Color.Yellow);
                     leaveChoiceNum = options.GetLength(0);
                 }
                 Game1.NarBox.Log("");
@@ -69,13 +71,13 @@ namespace twog
                 int canEnd = dialogueInfo.CanEnd ? 1 : 0;
                 yield return WaitForKeyPressed(options.GetLength(0) + canEnd);
 
+                // fade all previous text
+                Game1.NarBox.FadeAllLines();
+
                 // resolve key input
                 if (dialogueInfo.CanEnd && optionChoice == leaveChoiceNum)
                 {
                     StopDisplayDialogue();
-                    Game1.NarBox.Open = false;
-                    Game1.Player.StateMachine.State = twog.Player.StNormal;
-                    Game1.NarBox.ClearLog();
                 }
                 else
                 {
@@ -109,6 +111,10 @@ namespace twog
         public void StopDisplayDialogue()
         {
             Running = false;
+            Activated = false;
+            Game1.NarBox.Open = false;
+            Game1.Player.LeaveDialogue();
+            Game1.NarBox.ClearLog();
         }
     }
 }

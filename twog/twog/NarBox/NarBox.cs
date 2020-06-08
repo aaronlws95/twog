@@ -41,7 +41,6 @@ namespace twog
         {
             UpdateDimensions();
             drawCommands = new List<Line>();
-            Log("Welcome to Nazarek. I hope you enjoy your stay.", Color.White, true);
         }
 
         internal void UpdateClosed()

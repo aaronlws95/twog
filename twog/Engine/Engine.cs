@@ -40,6 +40,7 @@ namespace MyEngine
         // time
         public static float DeltaTime { get; private set; }
         public static float RawDeltaTime { get; private set; }
+        public static float TotalTime { get; private set; }
         public static float TimeRate = 1f;
         public static float FreezeTimer;
         public static int FPS;
@@ -196,6 +197,7 @@ namespace MyEngine
         {
             RawDeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             DeltaTime = RawDeltaTime * TimeRate;
+            TotalTime = (float)gameTime.TotalGameTime.TotalSeconds;
 
             //Update input
             MInput.Update();

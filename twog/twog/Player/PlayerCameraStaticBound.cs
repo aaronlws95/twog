@@ -20,9 +20,12 @@ namespace twog
             BoundHeight = height;
         }
 
-        public void Update(Vector2 pos)
+        public override void Update()
         {
-            Position = new Vector2(pos.X - BoundWidth / 2 - 8, pos.Y - BoundHeight / 2 - 8);
+            base.Update();
+            Level level = SceneAs<Level>();
+            Vector2 newScreenCenter = level.Camera.ScreenToCamera(new Vector2(Engine.Width / 2, Engine.Height / 2));
+            Position = new Vector2(newScreenCenter.X - BoundWidth / 2 - 8, newScreenCenter.Y - BoundHeight / 2 - 8);
         }
 
         public override void DebugRender(Camera camera)
