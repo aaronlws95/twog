@@ -45,30 +45,31 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Dialogue\CoDialogue.cs" />
-    <Compile Include="Dialogue\DialogueInfo.cs" />
-    <Compile Include="Dialogue\DialogueData.cs" />
-    <Compile Include="Entities\Monsters.cs" />
-    <Compile Include="Entities\NPC.cs" />
-    <Compile Include="Logic\GAccess.cs" />
-    <Compile Include="Entities\House.cs" />
-    <Compile Include="Entities\Door.cs" />
-    <Compile Include="NarBox\NarBox.cs" />
-    <Compile Include="Player\Bullet.cs" />
-    <Compile Include="Player\PlayerInteractor.cs" />
-    <Compile Include="Scenes\Level.cs" />
-    <Compile Include="Scenes\Scene1.cs" />
-    <Compile Include="Tiles\Background.cs" />
-    <Compile Include="Game1.cs" />
-    <Compile Include="Player\PlayerCamera.cs" />
-    <Compile Include="Player\PlayerCameraStaticBound.cs" />
-    <Compile Include="Tiles\ObjectMap.cs" />
-    <Compile Include="Tiles\TileIndexMap.cs" />
-    <Compile Include="Player\Player.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Scripts\Dialogue\CoDialogue.cs" />
+    <Compile Include="Scripts\Dialogue\DialogueInfo.cs" />
+    <Compile Include="Scripts\Dialogue\DialogueData.cs" />
+    <Compile Include="Scripts\Entities\Monsters\Monsters.cs" />
+    <Compile Include="Scripts\Entities\NPC.cs" />
+    <Compile Include="Scripts\Entities\Monsters\Zaletos.cs" />
+    <Compile Include="Scripts\GAccess.cs" />
+    <Compile Include="Scripts\Entities\House.cs" />
+    <Compile Include="Scripts\Entities\Door.cs" />
+    <Compile Include="Scripts\NarBox.cs" />
+    <Compile Include="Scripts\Entities\Bullet.cs" />
+    <Compile Include="Scripts\Components\PlayerInteractor.cs" />
+    <Compile Include="Scripts\Scenes\Level.cs" />
+    <Compile Include="Scripts\Scenes\Scene1.cs" />
+    <Compile Include="Scripts\Tiles\Background.cs" />
+    <Compile Include="Scripts\Game1.cs" />
+    <Compile Include="Scripts\PlayerCamera.cs" />
+    <Compile Include="Scripts\DebugTool\PlayerCameraStaticBound.cs" />
+    <Compile Include="Scripts\Tiles\ObjectMap.cs" />
+    <Compile Include="Scripts\Tiles\TileIndexMap.cs" />
+    <Compile Include="Scripts\Player\Player.cs" />
+    <Compile Include="Scripts\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Logic\GFX.cs" />
-    <Compile Include="Scenes\Scene0.cs" />
+    <Compile Include="Scripts\GFX.cs" />
+    <Compile Include="Scripts\Scenes\Scene0.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

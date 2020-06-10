@@ -32,7 +32,5 @@ namespace twog
             Tag = GAccess.HouseTag;
             AddTag(GAccess.SolidTag);
         }
-
-
     }
 }

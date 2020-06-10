@@ -42,6 +42,11 @@ namespace twog
             LoadJson("Dialogue/dialogue_data");
         }
 
+        public static DialogueInfo GetDialogueInfo(string key)
+        {
+            return dialogueJson.Dialogues[key];
+        }
+
         private void LoadJson(string path)
         {
             using (StreamReader r = new StreamReader(Path.Combine(Engine.ContentDirectory, path + ".json")))
@@ -54,11 +59,6 @@ namespace twog
         private class DialogueJson
         {
             public Dictionary<String, DialogueInfo> Dialogues { get; set; }
-        }
-
-        public static DialogueInfo GetDialogueInfo(string key)
-        {
-            return dialogueJson.Dialogues[key];
         }
     }
 }

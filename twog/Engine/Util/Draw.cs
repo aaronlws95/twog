@@ -41,7 +41,7 @@ namespace MyEngine
         internal static void Initialize(GraphicsDevice graphicsDevice)
         {
             SpriteBatch = new SpriteBatch(graphicsDevice);
-            DefaultFont = Engine.Instance.Content.Load<SpriteFont>(@"Fonts\dobra_book");
+            DefaultFont = Engine.Instance.Content.Load<SpriteFont>(@"Fonts\dobra_book_20");
             UseDebugPixelTexture();
         }
 

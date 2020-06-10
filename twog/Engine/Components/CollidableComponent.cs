@@ -320,5 +320,12 @@ namespace MyEngine
                 Bottom = value.Y;
             }
         }
+
+        public override void DebugRender(Camera camera)
+        {
+            base.DebugRender(camera);
+            if (Collider != null)
+                Collider.Render(camera, Collidable ? Color.Red : Color.DarkRed);
+        }
     }
 }

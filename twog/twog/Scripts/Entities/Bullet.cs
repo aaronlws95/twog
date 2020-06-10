@@ -11,7 +11,9 @@ namespace twog
     [Tracked]
     public class Bullet : Entity
     {
-        private const float LIFESPAN = 1f;
+        // constants
+        private const float LIFESPAN = 0.5f;
+        private const float SPEED = 2f;
 
         public Sprite Sprite;
         public Vector2 Velocity;
@@ -22,9 +24,8 @@ namespace twog
             Sprite = GFX.SpriteBank.Create("bullet_0");
             Add(Sprite);
             Position = new Vector2(pos.X - 4, pos.Y - 4);
-            Collider = new Hitbox(7, 7, 0, 0);
-            float speed = 2f;
-            Velocity = new Vector2(speed * direction.X, speed * direction.Y);
+            Collider = new Hitbox(Sprite.Width, Sprite.Height);
+            Velocity = new Vector2(SPEED * direction.X, SPEED * direction.Y);
             Alarm = Alarm.Set(this, LIFESPAN, OnComplete);
         }
 
@@ -38,6 +39,11 @@ namespace twog
             base.Update();            
             X += Velocity.X;
             Y += Velocity.Y;
+
+            if (CollideCheck(GAccess.SolidTag))
+            {
+                Scene.Remove(this);
+            }
         }
     }
 }

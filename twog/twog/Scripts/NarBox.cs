@@ -16,7 +16,7 @@ namespace twog
         private const float REPEAT_DELAY = .1f;
         private const float REPEAT_EVERY = 1 / 30f;
         private const int LINE_SPACE_Y = 30;
-        private const int MARGIN_X = 10;
+        private const int MARGIN_X = 15;
         private const int MARGIN_Y = 10;
 
         public bool Open;

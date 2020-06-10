@@ -25,7 +25,6 @@ namespace twog
         {
             NextScene = nextScene;
             Collider = new Hitbox(width, height);
-            Tag = GAccess.DoorTag;
             Locked = false;
         }
 

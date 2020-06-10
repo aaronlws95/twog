@@ -13,9 +13,10 @@ namespace twog
     public class CoDialogue : Component
     {
         public string DialogueState { get; set; }
-        private Coroutine dialogueCoroutine;
         public bool Activated { get; private set; }
         public bool Running { get; private set; }
+
+        private Coroutine dialogueCoroutine;
         private int optionChoice;
         private int leaveChoiceNum;
 
@@ -23,6 +24,23 @@ namespace twog
         {
             DialogueState = dialogueState;
             Running = false;
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if (Scene != null && !Activated)
+            {
+                PlayerInteractor playerInteractor = Scene.Tracker.GetComponent<PlayerInteractor>();
+                if (playerInteractor != null)
+                {
+                    if (MInput.Keyboard.Pressed(Keys.F) && playerInteractor.Check(Entity))
+                        StartDialogue();
+                }
+            }
+
+            if (Activated)
+                dialogueCoroutine.Update();
         }
 
         public void StartDialogue()
@@ -33,10 +51,13 @@ namespace twog
             Game1.Player.EnterDialogue();
         }
 
-        public override void Update()
+        public void StopDisplayDialogue()
         {
-            base.Update();
-            dialogueCoroutine.Update();
+            Running = false;
+            Activated = false;
+            Game1.NarBox.Open = false;
+            Game1.Player.LeaveDialogue();
+            Game1.NarBox.ClearLog();
         }
 
         private IEnumerator DisplayDialogue(string key)
@@ -106,15 +127,6 @@ namespace twog
                 }
                 yield return null;
             }
-        }
-
-        public void StopDisplayDialogue()
-        {
-            Running = false;
-            Activated = false;
-            Game1.NarBox.Open = false;
-            Game1.Player.LeaveDialogue();
-            Game1.NarBox.ClearLog();
         }
     }
 }

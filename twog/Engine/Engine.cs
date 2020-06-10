@@ -86,7 +86,7 @@ namespace MyEngine
             Graphics.DeviceReset += OnGraphicsReset;
             Graphics.DeviceCreated += OnGraphicsCreate;
             Graphics.SynchronizeWithVerticalRetrace = true;
-            Graphics.PreferMultiSampling = false;
+            Graphics.PreferMultiSampling = true;
             Graphics.GraphicsProfile = GraphicsProfile.HiDef;
             Graphics.PreferredBackBufferFormat = SurfaceFormat.Color;
             Graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;

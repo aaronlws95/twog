@@ -15,7 +15,7 @@ namespace MyEngine
         public EverythingRenderer()
         {
             BlendState = BlendState.AlphaBlend;
-            SamplerState = SamplerState.LinearClamp;
+            SamplerState = SamplerState.PointClamp;
             Camera = new Camera();
         }
 
@@ -26,15 +26,15 @@ namespace MyEngine
 
         public override void Render(Scene scene)
         {
-            Draw.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, Effect, Camera.Matrix * Engine.ScreenMatrix);
+            Draw.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState, SamplerState, DepthStencilState.None, RasterizerState.CullNone, Effect, Camera.Matrix * Engine.ScreenMatrix);
 
             scene.Entities.Render();
             if (Engine.Commands.Open)
                 scene.Entities.DebugRender(Camera);
 
-#if DEBUG
-            scene.Entities.DebugRender(Camera);
-#endif
+//#if DEBUG
+//            scene.Entities.DebugRender(Camera);
+//#endif
 
             Draw.SpriteBatch.End();
         }

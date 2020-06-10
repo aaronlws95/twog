@@ -31,7 +31,7 @@ namespace twog
             Add(house0);
 
             Door door0 = new Door(new Vector2(house0.X + 16, house0.Y + 16 * 4), 16, 16);
-            CoDialogue coDialogueDoor0 = new CoDialogue("LOCKED001DOOR");
+            door0.Add(new CoDialogue("LOCKED001DOOR"));
             Add(door0);
 
             Door door1 = new Door(new Vector2(house1.X + 30, house1.Y + 62), 21, 17, new Scene1());
@@ -49,7 +49,7 @@ namespace twog
             PlayerCameraStaticBound camDebug = new PlayerCameraStaticBound(newScreenCenter, Engine.Width * 1 / 3, Engine.Height * 1 / 3);
             Add(camDebug);
 
-            Monsters monster = new Monsters("zaletos", new Vector2(15 * 16, 15 * 16));
+            Monsters monster = new Zaletos(new Vector2(15 * 16, 15 * 16));
             Add(monster);
         }
     }

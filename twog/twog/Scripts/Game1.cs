@@ -28,10 +28,12 @@ namespace twog
         //private static int windowHeight = 360;
         //private static int windowWidth = 1024;
         //private static int windowHeight = 576;
-        private static int windowWidth = 1600;
-        private static int windowHeight = 900;
-        //private static int windowWidth = 1920;
-        //private static int windowHeight = 1080;
+        //private static int windowWidth = 1280;
+        //private static int windowHeight = 720;
+        //private static int windowWidth = 1600;
+        //private static int windowHeight = 900;
+        private static int windowWidth = 1920;
+        private static int windowHeight = 1080;
 
         public static List<Scene> Scenes;
         public static Player Player;
@@ -54,23 +56,24 @@ namespace twog
         protected override void Initialize()
         {
             base.Initialize();
-
             Commands.Enabled = false;
 
             int initGAccess = GAccess.SolidTag.ID;
             GFX graphicsInit = GFX.Instance;
             DialogueData dialogueInit = DialogueData.Instance;
-
             NarBox = new NarBox();
 
+            // create NPCs
             NPCDict = new Dictionary<string, NPC>();
             NPC aisya = new NPC("Aisya");
-            aisya.CoDialogue = new CoDialogue("SCENE1001AISYA");
+            aisya.Add(new CoDialogue("SCENE1001AISYA"));
             NPCDict.Add("Aisya", aisya);
 
+            // initialize player and scene
             Player = new Player(new Vector2(10 * 16, 10 * 16));
             Scene = new Scene0();
 
+            // intro dialogue
             GameDialogue = new CoDialogue("SCENE0001INTRO");
             GameDialogue.StartDialogue();
         }
@@ -79,6 +82,7 @@ namespace twog
         {
             base.OnSceneTransition(from, to);
 
+            // determine player position from scene transition
             if (from != null && to != null)
             {
                 if (from.Name == "Scene0" && to.Name == "Scene1")

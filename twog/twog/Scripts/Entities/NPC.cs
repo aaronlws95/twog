@@ -13,13 +13,12 @@ namespace twog
     {
         public Sprite Sprite;
         public string Name { get; private set; }
-        public CoDialogue CoDialogue { get; set; }
 
         public NPC(string name) :base()
         {
             Name = name;
             Sprite = GFX.SpriteBank.Create(name);
-            Collider = new Hitbox(16, 16, 0, 0);
+            Collider = new Hitbox(Sprite.Width, Sprite.Height);
             Add(Sprite);
             Tag = GAccess.NPCTag;
             AddTag(GAccess.SolidTag);
@@ -29,34 +28,15 @@ namespace twog
         {
             Name = name;
             Sprite = GFX.SpriteBank.Create(name);
-            Collider = new Hitbox(16, 16, 0, 0);
+            Collider = new Hitbox(Sprite.Width, Sprite.Height);
             Add(Sprite);
             Tag = GAccess.NPCTag;
             AddTag(GAccess.SolidTag);
         }
 
-        public void StartDialogue()
-        {
-            CoDialogue.StartDialogue();
-        }
-
         public override void Update()
         {
             base.Update();
-
-            if (CoDialogue != null)
-            {
-                PlayerInteractor playerInteractor = Scene.Tracker.GetComponent<PlayerInteractor>();
-                if (playerInteractor.Check(this) && !CoDialogue.Activated)
-                {
-                    StartDialogue();
-                }
-
-                if (CoDialogue.Activated)
-                {
-                    CoDialogue.Update();
-                }
-            }
         }
     }
 }
