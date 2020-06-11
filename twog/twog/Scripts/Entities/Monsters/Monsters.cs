@@ -55,7 +55,7 @@ namespace twog
                 // dealing with hits
                 foreach (var bullet in Scene.Tracker.GetEntities<Bullet>())
                 {
-                    if (bullet.CollideCheck(this))
+                    if (bullet.CollideCheck(this) && bullet.TagCheck(GAccess.PlayerBullet))
                     {
                         Sprite.Play("hurt_0");
                         Scene.Remove(bullet);

@@ -16,9 +16,8 @@ namespace twog
         public const int StEnergyAtk = 5;
 
         // Constants
-        private const float JUMP_DURATION = 1f;
-        private const float MAX_SPEED = 1.0f;
-        private const float MIN_SPEED = 1.0f;
+        private const float JUMP_DURATION = 1.5f;
+        private const float SHOOT_DELAY = 0.1f;
 
         // Jumping
         public float VerticalVelocity = 0;
@@ -27,6 +26,9 @@ namespace twog
         public Vector2 JumpTarget;
         public Vector2 JumpOrigin;
         public Vector2 HorizontalDir;
+
+        public ZaletosBalls ZaletosBalls;
+        public float lastShotTime;
 
         public Zaletos(Vector2 pos) : base("zaletos", pos)
         {
@@ -38,11 +40,6 @@ namespace twog
         public override void Update()
         {
             base.Update();
-
-            if (MInput.Keyboard.Pressed(Microsoft.Xna.Framework.Input.Keys.Space))
-            {
-                StateMachine.State = StJump;
-            }
 
             switch (StateMachine.State)
             {
@@ -70,15 +67,9 @@ namespace twog
                         Jumping = true;
                     }
 
+
                     // update horizontal velocity
                     Velocity = HorizontalDir * Acceleration * Engine.DeltaTime;
-
-                    // clamp velocity
-                    Velocity.X = Calc.Sign(Velocity).X * Math.Max(Math.Abs(Velocity.X), MIN_SPEED);
-                    Velocity.Y = Calc.Sign(Velocity).Y * Math.Max(Math.Abs(Velocity.Y), MIN_SPEED);
-
-                    Velocity.X = Calc.Sign(Velocity).X * Math.Min(Math.Abs(Velocity.X), MAX_SPEED);
-                    Velocity.Y = Calc.Sign(Velocity).Y * Math.Min(Math.Abs(Velocity.Y), MAX_SPEED);
 
                     // update horizontal position
                     X += Velocity.X;
@@ -94,7 +85,7 @@ namespace twog
                     if (Z > 0)
                     {
                         Z = 0;
-                        StateMachine.State = StJump;
+                        StateMachine.State = StEnergyAtk;
                         Jumping = false;
                         Velocity = Vector2.Zero;
                     }
@@ -104,7 +95,36 @@ namespace twog
                         Y += VerticalVelocity;
 
                     break;
+                case StEnergyAtk:
+                    if (ZaletosBalls == null)
+                    {
+                        ZaletosBalls = new ZaletosBalls(this);
+                        Scene.Add(ZaletosBalls);
+                    }
+                    else
+                    {
+                        if (!ZaletosBalls.Init && Engine.TotalTime - lastShotTime > SHOOT_DELAY)
+                        {
+                            lastShotTime = Engine.TotalTime;
+                            ZaletosBalls.Shoot(Game1.Player.Position);
+                        }
+
+                        if (ZaletosBalls.Balls.Count == 0)
+                        {
+                            Scene.Remove(ZaletosBalls);
+                            ZaletosBalls = null;
+                            StateMachine.State = StJump;
+                        }
+                    }
+
+                        
+                    break;
                 case StDead:
+                    if (ZaletosBalls != null)
+                    {
+                        Scene.Remove(ZaletosBalls);
+                        ZaletosBalls = null;
+                    }
                     Sprite.Play("dead_0");
                     AddTag(GAccess.SolidTag);
                     break;

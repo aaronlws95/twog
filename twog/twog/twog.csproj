@@ -45,9 +45,11 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HealthBar.cs" />
     <Compile Include="Scripts\Dialogue\CoDialogue.cs" />
     <Compile Include="Scripts\Dialogue\DialogueInfo.cs" />
     <Compile Include="Scripts\Dialogue\DialogueData.cs" />
+    <Compile Include="Scripts\Entities\ZaletosBalls.cs" />
     <Compile Include="Scripts\Entities\Monsters\Monsters.cs" />
     <Compile Include="Scripts\Entities\NPC.cs" />
     <Compile Include="Scripts\Entities\Monsters\Zaletos.cs" />

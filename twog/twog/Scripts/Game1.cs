@@ -30,17 +30,17 @@ namespace twog
         //private static int windowHeight = 576;
         //private static int windowWidth = 1280;
         //private static int windowHeight = 720;
-        //private static int windowWidth = 1600;
-        //private static int windowHeight = 900;
-        private static int windowWidth = 1920;
-        private static int windowHeight = 1080;
+        private static int windowWidth = 1600;
+        private static int windowHeight = 900;
+        //private static int windowWidth = 1920;
+        //private static int windowHeight = 1080;
 
         public static List<Scene> Scenes;
         public static Player Player;
 
         public static NarBox NarBox { get; private set; }
         public static Dictionary<string, NPC> NPCDict { get; private set; }
-        public CoDialogue GameDialogue { get; set; }
+        public static CoDialogue GameDialogue { get; set; }
 
         public Game1() : base(width, height, windowWidth, windowHeight, "twog", false)
         {

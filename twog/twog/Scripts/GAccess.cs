@@ -19,6 +19,8 @@ namespace twog
         public static BitTag NPCTag = new BitTag("npc");
         public static BitTag HittableTag = new BitTag("hittable");
         public static BitTag MonsterTag = new BitTag("monster");
+        public static BitTag PlayerBullet = new BitTag("playerbullet");
+        public static BitTag MonsterBullet = new BitTag("monsterbullet");
         #endregion
 
     }

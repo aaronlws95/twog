@@ -37,7 +37,8 @@ namespace twog
         public Vector2 Acceleration;
 
         // player stats
-        public int Health;
+        public int BaseHealth;
+        public int CurHealth;
 
         public Player(Vector2 pos) : base(pos)
         {
@@ -52,7 +53,8 @@ namespace twog
 
             StateMachine.State = StNormal;
 
-            Health = 30;
+            BaseHealth = 30;
+            CurHealth = BaseHealth;
 
             PlayerInteractor = new PlayerInteractor(new Vector2(Position.X, Position.Y + 16));
             Add(PlayerInteractor);
@@ -65,6 +67,7 @@ namespace twog
         {
             base.Added(scene);
             level = SceneAs<Level>();
+            level.Add(new HealthBar());
         }
 
         public override void Update()
@@ -89,7 +92,7 @@ namespace twog
                     if (Engine.TotalTime - lastShotTime > SHOOT_DELAY && (shoot_x != 0 ^ shoot_y != 0))
                     {
                         lastShotTime = Engine.TotalTime;
-                        Shoot(new Vector2(shoot_x, shoot_y));
+                        Shoot(new Vector2(shoot_x, shoot_y), 0);
                     }
 
                     break;
@@ -101,27 +104,54 @@ namespace twog
                         StateMachine.State = StNormal;
 
                     break;
+                case StDead:
+                    if (!Game1.GameDialogue.Activated)
+                    {
+                        Game1.GameDialogue = new CoDialogue("DEAD001PLAYER");
+                        Game1.GameDialogue.StartDialogue();
+                    }
+    
+                    break;
             }
 
-            UpdatePosition();
-            if (level.BoundCamera)
-                level.Camera.MoveBound(new Vector2(0, 0), new Vector2(level.Background.GridWidth, level.Background.GridHeight));
-            else
-                level.Camera.Move();
+            if (StateMachine.State != StDead)
+            {
+                // update position
+                UpdatePosition();
+
+                // update camera
+                if (level.BoundCamera)
+                    level.Camera.MoveBound(new Vector2(0, 0), new Vector2(level.Background.GridWidth, level.Background.GridHeight));
+                else
+                    level.Camera.Move();
+
+                // check for collision with projectile
+                if (CollideCheck(GAccess.MonsterBullet))
+                {
+                    CurHealth -= 1;
+                    Sprite.Play("hurt_0");
+                }
+
+                if (CurHealth <= 0)
+                {
+                    StateMachine.State = StDead;
+                }
+            }
+
         }
 
         public void Hurt(int dmg)
         {
             Sprite.Play("hurt_0");
-            Health -= dmg;
+            CurHealth -= dmg;
         }
 
         #region Attack
 
-        public void Shoot(Vector2 direction)
+        public void Shoot(Vector2 direction, int bullet_id)
         {
             if (direction != Vector2.Zero)
-                Scene.Add(new Bullet(Position, direction));
+                Scene.Add(new Bullet(Position - Vector2.One * 4, direction, bullet_id, true));
         }
 
         #endregion
