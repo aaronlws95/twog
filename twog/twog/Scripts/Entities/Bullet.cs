@@ -11,27 +11,58 @@ namespace twog
     [Tracked]
     public class Bullet : Entity
     {
-        // constants
-        public float Lifespan = 0.4f;
-        public float Speed = 2f;
+        public int Damage;
+        public bool Shooting;
 
         public Sprite Sprite;
         public Vector2 Velocity;
-        public Alarm Alarm;
 
-        public Bullet(Vector2 pos, Vector2 direction, int bullet_id, bool player)
+
+        public Bullet(Vector2 pos, Vector2 direction, int id, bool player=true)
         {
             if (player)
                 Tag = GAccess.PlayerBullet;
             else
                 Tag = GAccess.MonsterBullet;
 
-            Sprite = GFX.SpriteBank.Create("bullet_" + bullet_id);
+            float speed;
+
+            switch (id)
+            {
+                default:
+                    Damage = 1;
+                    speed = 2f;
+                    SetAlarm(0.4f);
+                    Shooting = true;
+                    break;
+                case 0:
+                    Damage = 1;
+                    speed = 100f;
+                    SetAlarm(0.4f);
+                    Shooting = true;
+                    break;
+                case 1:
+                    Damage = 2;
+                    speed = 200f;
+                    Shooting = false;
+                    break;
+            }
+
+            Sprite = GFX.SpriteBank.Create("bullet_" + id);
             Add(Sprite);
             Position = new Vector2(pos.X, pos.Y);
             Collider = new Hitbox(Sprite.Width, Sprite.Height);
-            Velocity = new Vector2(Speed * direction.X, Speed * direction.Y);
-            Alarm = Alarm.Set(this, Lifespan, OnComplete);
+            Velocity = speed * Vector2.Normalize(direction);
+        }
+
+        public void SetVelocity(float speed, Vector2 direction)
+        {
+            Velocity = speed * Vector2.Normalize(direction);
+        }
+
+        public void SetAlarm(float lifespan)
+        {
+            Alarm Alarm = Alarm.Set(this, lifespan, OnComplete);
         }
 
         public void OnComplete()
@@ -42,13 +73,18 @@ namespace twog
         public override void Update()
         {
             base.Update();            
-            X += Velocity.X;
-            Y += Velocity.Y;
 
-            if (CollideCheck(GAccess.SolidTag))
+            if (Shooting)
             {
-                Scene.Remove(this);
+                X += Velocity.X * Engine.DeltaTime;
+                Y += Velocity.Y * Engine.DeltaTime;
+
+                if (CollideCheck(GAccess.SolidTag))
+                {
+                    Scene.Remove(this);
+                }
             }
+
         }
     }
 }

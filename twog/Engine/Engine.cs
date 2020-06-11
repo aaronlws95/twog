@@ -120,7 +120,7 @@ namespace MyEngine
 
             IsMouseVisible = false;
             IsFixedTimeStep = false;
-            ExitOnEscapeKeypress = true;
+            ExitOnEscapeKeypress = false;
 
             GCSettings.LatencyMode = GCLatencyMode.SustainedLowLatency;
         }
@@ -400,7 +400,7 @@ namespace MyEngine
                 Width = ViewWidth,
                 Height = ViewHeight,
                 MinDepth = 0,
-                MaxDepth = 1
+                MaxDepth = 2
             };
 
             //Debug Log

@@ -45,10 +45,11 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="HealthBar.cs" />
+    <Compile Include="Scripts\Entities\HealthBar.cs" />
     <Compile Include="Scripts\Dialogue\CoDialogue.cs" />
     <Compile Include="Scripts\Dialogue\DialogueInfo.cs" />
     <Compile Include="Scripts\Dialogue\DialogueData.cs" />
+    <Compile Include="Scripts\Entities\MenuButton.cs" />
     <Compile Include="Scripts\Entities\ZaletosBalls.cs" />
     <Compile Include="Scripts\Entities\Monsters\Monsters.cs" />
     <Compile Include="Scripts\Entities\NPC.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Scripts\Entities\Bullet.cs" />
     <Compile Include="Scripts\Components\PlayerInteractor.cs" />
     <Compile Include="Scripts\Scenes\Level.cs" />
+    <Compile Include="Scripts\Scenes\MainMenu.cs" />
     <Compile Include="Scripts\Scenes\Scene1.cs" />
     <Compile Include="Scripts\Tiles\Background.cs" />
     <Compile Include="Scripts\Game1.cs" />

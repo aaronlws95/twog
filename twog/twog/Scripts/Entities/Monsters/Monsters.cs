@@ -14,7 +14,8 @@ namespace twog
         public const int TOUCH_DMG = 1;
 
         public Sprite Sprite;
-        public int Health;
+        public int Health = 3;
+        public float KnockbackDistance = 5f;
 
         public StateMachine StateMachine;
         public const int StIdle = 0;
@@ -24,6 +25,7 @@ namespace twog
         public Vector2 Acceleration;
 
         public CollidableComponent DetectAreaCollider;
+        
 
         public Monsters(string name, Vector2 pos) : base(pos)
         {
@@ -34,7 +36,6 @@ namespace twog
             AddTag(GAccess.MonsterTag);
             StateMachine = new StateMachine(2);
             StateMachine.State = StIdle;
-            Health = 3;
 
             // detect area
             DetectAreaCollider = new CollidableComponent(true, false, true);
@@ -44,6 +45,14 @@ namespace twog
                                                     -detectAreaColliderWidth / 2 + Sprite.Width / 2, 
                                                     -detectAreaColliderHeight / 2 + Sprite.Height / 2);
             Add(DetectAreaCollider);
+
+            Depth = 1;
+        }
+
+        public void Hurt(int dmg)
+        {
+            Sprite.Play("hurt_0");
+            Health -= dmg;
         }
 
         public override void Update()
@@ -53,26 +62,28 @@ namespace twog
             if (StateMachine.State != StDead)
             {
                 // dealing with hits
-                foreach (var bullet in Scene.Tracker.GetEntities<Bullet>())
+                foreach (Bullet bullet in Scene.Tracker.GetEntities<Bullet>())
                 {
                     if (bullet.CollideCheck(this) && bullet.TagCheck(GAccess.PlayerBullet))
                     {
-                        Sprite.Play("hurt_0");
+                        Hurt(bullet.Damage);
                         Scene.Remove(bullet);
-                        Health -= 1;
-                        if (Health == 0)
-                        {
-                            StateMachine.State = StDead;
-                        }
                     }
                 }
 
+                if (Health == 0)
+                {
+                    StateMachine.State = StDead;
+                }
+                    
+
+                // knocking into player
                 if (CollideCheck(Game1.Player))
                 {
                     // only knockback if not currently being knockbacked
                     if (Game1.Player.StateMachine.State != Player.StKnockback)
                     {
-                        Game1.Player.Velocity = Calc.Sign(Center - Game1.Player.Position) * -5f;
+                        Game1.Player.Velocity = Calc.Sign(Center - Game1.Player.Position) * -KnockbackDistance;
                         Game1.Player.StateMachine.State = Player.StKnockback;
                         Game1.Player.Hurt(TOUCH_DMG);
                     }

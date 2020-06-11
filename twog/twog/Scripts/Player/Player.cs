@@ -13,20 +13,20 @@ namespace twog
     public class Player : Entity
     {
         // constants
-        private const float SHOOT_DELAY = 0.45f;
+        private const float SHOOT_DELAY = 0.6f;
         private const float MAX_SPEED = 1.0f;
         private const float MIN_SPEED = 1.0f;
-        private const float ACCELERATION = 30f;
+        private const float SPEED = 30f;
         private const float FRICTION = 20f;
 
-        public Sprite Sprite;
+        public Sprite Sprite = GFX.SpriteBank.Create("player");
         public PlayerInteractor PlayerInteractor;
 
         private float lastShotTime = 0;
         private Level level;
 
         // state machine
-        public StateMachine StateMachine;
+        public StateMachine StateMachine = new StateMachine(4);
         public const int StNormal = 0;
         public const int StStationary = 1;
         public const int StDead = 2;
@@ -34,40 +34,36 @@ namespace twog
 
         // movement
         public Vector2 Velocity;
-        public Vector2 Acceleration;
 
         // player stats
-        public int BaseHealth;
+        public int BaseHealth = 30;
         public int CurHealth;
 
         public Player(Vector2 pos) : base(pos)
         {
-            Sprite = GFX.SpriteBank.Create("player");
             Collider = new Hitbox(Sprite.Width, Sprite.Height, -Sprite.Width / 2, -Sprite.Height / 2);
-            Add(Sprite);
-
+            PlayerInteractor = new PlayerInteractor(new Vector2(Position.X, Position.Y + 16));
+                    
             // State Machine
-            StateMachine = new StateMachine(4);
-            StateMachine.SetCallbacks(StNormal, null, null, null, null);
-            StateMachine.SetCallbacks(StStationary, null, null, null, null);
-
             StateMachine.State = StNormal;
 
-            BaseHealth = 30;
             CurHealth = BaseHealth;
 
-            PlayerInteractor = new PlayerInteractor(new Vector2(Position.X, Position.Y + 16));
+            Add(Sprite);
             Add(PlayerInteractor);
 
-            Acceleration = new Vector2(ACCELERATION, ACCELERATION);
-
+            Depth = 0;
         }
 
         public override void Added(Scene scene)
         {
             base.Added(scene);
             level = SceneAs<Level>();
-            level.Add(new HealthBar());
+            if (level != null)
+            {
+                level.Add(new HealthBar());
+            }
+            
         }
 
         public override void Update()
@@ -96,7 +92,8 @@ namespace twog
                     }
 
                     break;
-
+                case StStationary:
+                    break;
                 case StKnockback:
                     UpdateVelocityFriction();
                     
@@ -114,7 +111,7 @@ namespace twog
                     break;
             }
 
-            if (StateMachine.State != StDead)
+            if (StateMachine.State != StDead && StateMachine.State != StStationary)
             {
                 // update position
                 UpdatePosition();
@@ -125,11 +122,14 @@ namespace twog
                 else
                     level.Camera.Move();
 
-                // check for collision with projectile
-                if (CollideCheck(GAccess.MonsterBullet))
+                // dealing with hits
+                foreach (Bullet bullet in Scene.Tracker.GetEntities<Bullet>())
                 {
-                    CurHealth -= 1;
-                    Sprite.Play("hurt_0");
+                    if (bullet.CollideCheck(this) && bullet.TagCheck(GAccess.MonsterBullet))
+                    {
+                        Hurt(bullet.Damage);
+                        Scene.Remove(bullet);
+                    }
                 }
 
                 if (CurHealth <= 0)
@@ -137,21 +137,21 @@ namespace twog
                     StateMachine.State = StDead;
                 }
             }
+        }
 
+
+        #region Combat
+
+        public void Shoot(Vector2 direction, int bullet_id)
+        {
+            if (direction != Vector2.Zero)
+                Scene.Add(new Bullet(Position - Vector2.One * 4, direction, bullet_id, true));
         }
 
         public void Hurt(int dmg)
         {
             Sprite.Play("hurt_0");
             CurHealth -= dmg;
-        }
-
-        #region Attack
-
-        public void Shoot(Vector2 direction, int bullet_id)
-        {
-            if (direction != Vector2.Zero)
-                Scene.Add(new Bullet(Position - Vector2.One * 4, direction, bullet_id, true));
         }
 
         #endregion
@@ -177,8 +177,8 @@ namespace twog
             // update velocity        
             if (add != Vector2.Zero)
             {
-                Velocity.X = add.X * Acceleration.X * Engine.DeltaTime;
-                Velocity.Y = add.Y * Acceleration.Y * Engine.DeltaTime;
+                Velocity.X = add.X * SPEED * Engine.DeltaTime;
+                Velocity.Y = add.Y * SPEED * Engine.DeltaTime;
 
                 // clamp velocity
                 Velocity.X = Calc.Sign(Velocity).X * Math.Max(Math.Abs(Velocity.X), MIN_SPEED);

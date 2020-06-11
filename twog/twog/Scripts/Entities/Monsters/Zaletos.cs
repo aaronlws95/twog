@@ -11,13 +11,13 @@ namespace twog
     public class Zaletos : Monsters
     {
         // State Machine
-        public const int StWander = 3;
-        public const int StJump = 4;
-        public const int StEnergyAtk = 5;
+        public const int StJump = 3;
+        public const int StEnergyAtk = 4;
 
         // Constants
-        private const float JUMP_DURATION = 1.5f;
+        private const float JUMP_DURATION = 1f;
         private const float SHOOT_DELAY = 0.1f;
+        private const float ENERGY_ATK_RECHARGE = 2.5f;
 
         // Jumping
         public float VerticalVelocity = 0;
@@ -27,15 +27,31 @@ namespace twog
         public Vector2 JumpOrigin;
         public Vector2 HorizontalDir;
 
+        // Energy Attack
         public ZaletosBalls ZaletosBalls;
-        public float lastShotTime;
+        private float lastShotTime;
+        private float lastEnergyAtkTime;
 
         public Zaletos(Vector2 pos) : base("zaletos", pos)
         {
             StateMachine = new StateMachine(10);
             StateMachine.State = StIdle;
-            Health = 5;
+            Health = 10;
+            ZaletosBalls = new ZaletosBalls(this);
         }
+
+        public override void Added(Scene scene)
+        {
+            base.Added(scene);
+            Scene.Add(ZaletosBalls);
+        }
+
+        public override void Removed(Scene scene)
+        {
+            base.Added(scene);
+            Scene.Remove(ZaletosBalls);
+        }
+
 
         public override void Update()
         {
@@ -72,8 +88,14 @@ namespace twog
                     Velocity = HorizontalDir * Acceleration * Engine.DeltaTime;
 
                     // update horizontal position
-                    X += Velocity.X;
-                    Y += Velocity.Y;
+
+                    if (!CollideCheck(GAccess.SolidTag, new Vector2(X + Velocity.X, Y)))
+                        X += Velocity.X;
+
+                    if (!CollideCheck(GAccess.SolidTag, new Vector2(X, Y + Velocity.Y)))
+                        Y += Velocity.Y;
+                    //X += Velocity.X;
+                    //Y += Velocity.Y;
 
                     // update vertical velocity
                     VerticalVelocity += 9.8f * Engine.DeltaTime;
@@ -85,23 +107,29 @@ namespace twog
                     if (Z > 0)
                     {
                         Z = 0;
-                        StateMachine.State = StEnergyAtk;
+                        
                         Jumping = false;
                         Velocity = Vector2.Zero;
+
+                        if (Engine.TotalTime - lastEnergyAtkTime > ENERGY_ATK_RECHARGE)
+                            StateMachine.State = StEnergyAtk;
+                        else
+                            StateMachine.State = StJump;
                     }
 
                     // project vertical Z to 2D 
                     if (Z != 0)
-                        Y += VerticalVelocity;
+                        if (!CollideCheck(GAccess.SolidTag, new Vector2(X, Y + VerticalVelocity)))
+                            Y += VerticalVelocity;
 
                     break;
+
                 case StEnergyAtk:
-                    if (ZaletosBalls == null)
+                    if (ZaletosBalls.Balls.Count == 0 && ZaletosBalls.Init)
                     {
-                        ZaletosBalls = new ZaletosBalls(this);
-                        Scene.Add(ZaletosBalls);
+                        ZaletosBalls.Recharge();
                     }
-                    else
+                    else if (!ZaletosBalls.Init)
                     {
                         if (!ZaletosBalls.Init && Engine.TotalTime - lastShotTime > SHOOT_DELAY)
                         {
@@ -111,22 +139,14 @@ namespace twog
 
                         if (ZaletosBalls.Balls.Count == 0)
                         {
-                            Scene.Remove(ZaletosBalls);
-                            ZaletosBalls = null;
+                            lastEnergyAtkTime = Engine.TotalTime;
                             StateMachine.State = StJump;
                         }
                     }
-
-                        
                     break;
+
                 case StDead:
-                    if (ZaletosBalls != null)
-                    {
-                        Scene.Remove(ZaletosBalls);
-                        ZaletosBalls = null;
-                    }
                     Sprite.Play("dead_0");
-                    AddTag(GAccess.SolidTag);
                     break;
             }
         }

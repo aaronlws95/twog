@@ -71,11 +71,11 @@ namespace twog
 
             // initialize player and scene
             Player = new Player(new Vector2(10 * 16, 10 * 16));
-            Scene = new Scene0();
+            Scene = new MainMenu();
 
             // intro dialogue
             GameDialogue = new CoDialogue("SCENE0001INTRO");
-            GameDialogue.StartDialogue();
+            //GameDialogue.StartDialogue();
         }
 
         protected override void OnSceneTransition(Scene from, Scene to)
