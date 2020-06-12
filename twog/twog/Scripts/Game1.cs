@@ -42,6 +42,8 @@ namespace twog
         public static Dictionary<string, NPC> NPCDict { get; private set; }
         public static CoDialogue GameDialogue { get; set; }
 
+        public static bool NazSouthIntro = false;
+
         public Game1() : base(width, height, windowWidth, windowHeight, "twog", false)
         {
             Window.AllowUserResizing = false;
@@ -70,12 +72,11 @@ namespace twog
             NPCDict.Add("Aisya", aisya);
 
             // initialize player and scene
-            Player = new Player(new Vector2(10 * 16, 10 * 16));
-            Scene = new MainMenu();
+            Player = new Player(new Vector2(9 * 16, 12 * 16));
+            Scene = new Nazarek(); //MainMenu();
 
             // intro dialogue
-            GameDialogue = new CoDialogue("SCENE0001INTRO");
-            //GameDialogue.StartDialogue();
+            GameDialogue = new CoDialogue();
         }
 
         protected override void OnSceneTransition(Scene from, Scene to)
@@ -85,7 +86,17 @@ namespace twog
             // determine player position from scene transition
             if (from != null && to != null)
             {
-                if (from.Name == "Scene0" && to.Name == "Scene1")
+                if (from.Name == "Nazarek South" && to.Name == "Nazarek")
+                {
+                    Player.Position = new Vector2(15 * 16, 39 * 16 - 8);
+                }
+
+                if (from.Name == "Nazarek" && to.Name == "Nazarek South")
+                {
+                    Player.Position = new Vector2(9 * 16, 0 - 8);
+                }
+            
+                if (from.Name == "Nazarek" && to.Name == "Scene1")
                 {
                     Player.Position = new Vector2(6 * 16 - 8, 11 * 16 - 8);
                 }

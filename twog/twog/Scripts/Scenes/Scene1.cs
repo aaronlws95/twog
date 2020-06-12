@@ -27,7 +27,7 @@ namespace twog
             ObjectMap objectMap = new ObjectMap("Sprites/Spritesheets/tile_spritesheet_0.png", "Maps/object_map_scene1");
             Add(objectMap);
 
-            Door door = new Door(new Vector2(5 * 16, 11 * 16), 16, 16, new Scene0());
+            Door door = new Door(new Vector2(5 * 16, 11 * 16), 16, 16, new Nazarek());
             Add(door);
 
             Add(Game1.Player);

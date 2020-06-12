@@ -13,6 +13,12 @@ namespace twog
         private int boundWidth;
         private int boundHeight;
 
+        public PlayerCamera(int width, int height) : base(width, height)
+        {
+            boundWidth = 0;
+            boundHeight = 0;
+        }
+
         public PlayerCamera(int width, int height, int bWidth, int bHeight) : base(width, height)
         {
             boundWidth = bWidth;

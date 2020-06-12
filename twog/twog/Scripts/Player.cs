@@ -63,7 +63,6 @@ namespace twog
             {
                 level.Add(new HealthBar());
             }
-            
         }
 
         public override void Update()
@@ -111,7 +110,7 @@ namespace twog
                     break;
             }
 
-            if (StateMachine.State != StDead && StateMachine.State != StStationary)
+            if (StateMachine.State != StDead)
             {
                 // update position
                 UpdatePosition();

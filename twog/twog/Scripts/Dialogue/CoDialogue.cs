@@ -19,9 +19,22 @@ namespace twog
         private Coroutine dialogueCoroutine;
         private int optionChoice;
         private int leaveChoiceNum;
+        private Action OnComplete;
+
+        public CoDialogue() : base(true, false)
+        {
+            Running = false;
+        }
 
         public CoDialogue(string dialogueState) : base(true, false)
         {
+            DialogueState = dialogueState;
+            Running = false;
+        }
+
+        public CoDialogue(string dialogueState, Action onComplete) : base(true, false)
+        {
+            OnComplete = onComplete;
             DialogueState = dialogueState;
             Running = false;
         }
@@ -34,7 +47,7 @@ namespace twog
                 PlayerInteractor playerInteractor = Scene.Tracker.GetComponent<PlayerInteractor>();
                 if (playerInteractor != null)
                 {
-                    if (MInput.Keyboard.Pressed(Keys.F) && playerInteractor.Check(Entity))
+                    if (playerInteractor.Check(Entity))
                         StartDialogue();
                 }
             }
@@ -99,13 +112,16 @@ namespace twog
                 if (dialogueInfo.CanEnd && optionChoice == leaveChoiceNum)
                 {
                     StopDisplayDialogue();
+                    OnComplete?.Invoke();
                 }
                 else
                 {
-                    Game1.NarBox.Log("You " + " -- \"" + options[optionChoice] + "\"", Color.Gray, true);
+                    if (options[optionChoice] != "next")
+                    {
+                        Game1.NarBox.Log("You " + " -- \"" + options[optionChoice] + "\"", Color.Gray, true);
+                    }
                     DialogueState = dialogueInfo.Paths[optionChoice];
                     dialogueInfo = DialogueData.GetDialogueInfo(DialogueState);
-                    
                 }
             }
         }

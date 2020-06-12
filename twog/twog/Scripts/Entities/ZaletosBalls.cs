@@ -40,6 +40,15 @@ namespace twog
             }
         }
 
+        public void Clear()
+        {
+            for (int i = 0; i<Balls.Count; i++)
+            {
+                Scene.Remove(Balls[i]);
+                Balls.RemoveAt(i);
+            }
+        }
+
         public void Shoot(Vector2 target)
         {
             for (int i =0; i< Balls.Count;i++)

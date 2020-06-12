@@ -62,6 +62,7 @@
     <Compile Include="Scripts\Components\PlayerInteractor.cs" />
     <Compile Include="Scripts\Scenes\Level.cs" />
     <Compile Include="Scripts\Scenes\MainMenu.cs" />
+    <Compile Include="Scripts\Scenes\NazarekSouth.cs" />
     <Compile Include="Scripts\Scenes\Scene1.cs" />
     <Compile Include="Scripts\Tiles\Background.cs" />
     <Compile Include="Scripts\Game1.cs" />
@@ -69,11 +70,11 @@
     <Compile Include="Scripts\DebugTool\PlayerCameraStaticBound.cs" />
     <Compile Include="Scripts\Tiles\ObjectMap.cs" />
     <Compile Include="Scripts\Tiles\TileIndexMap.cs" />
-    <Compile Include="Scripts\Player\Player.cs" />
+    <Compile Include="Scripts\Player.cs" />
     <Compile Include="Scripts\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\GFX.cs" />
-    <Compile Include="Scripts\Scenes\Scene0.cs" />
+    <Compile Include="Scripts\Scenes\Nazarek.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

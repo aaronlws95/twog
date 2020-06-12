@@ -61,7 +61,6 @@ namespace twog
             {
                 default:
                     break;
-
                 case StIdle:
                     if (Collide.Check(Game1.Player, DetectAreaCollider))
                     {
@@ -146,6 +145,10 @@ namespace twog
                     break;
 
                 case StDead:
+                    if (ZaletosBalls.Balls.Count != 0)
+                    {
+                        ZaletosBalls.Clear();
+                    }
                     Sprite.Play("dead_0");
                     break;
             }

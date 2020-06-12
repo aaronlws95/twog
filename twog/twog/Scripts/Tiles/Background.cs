@@ -20,7 +20,7 @@ namespace twog
             tileSet = new Tileset(tileSpritesheet, 16, 16);
             TileIndexMap tileIndexMap = new TileIndexMap(mapPath);
             TileGrid tileGrid = new TileGrid(16, 16, tileIndexMap.Indices.GetLength(0), tileIndexMap.Indices.GetLength(1));
-            tileGrid.Populate(tileSet, tileIndexMap.Indices);
+            tileGrid.PopulateOneIndex(tileSet, tileIndexMap.Indices);
             Add(tileGrid);
             Depth = 1;
             GridWidth = tileIndexMap.Indices.GetLength(0) * 16;

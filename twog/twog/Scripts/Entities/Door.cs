@@ -18,7 +18,7 @@ namespace twog
         {
             Collider = new Hitbox(width, height);
             Tag = GAccess.DoorTag;
-            Locked = true;
+            Locked = false;
         }
 
         public Door(Vector2 pos, int width, int height, Scene nextScene) : base(pos)

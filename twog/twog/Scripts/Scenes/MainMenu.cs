@@ -87,7 +87,7 @@ namespace twog
                 switch (Selection)
                 {
                     case StStart:
-                        Engine.Scene = new Scene0();
+                        Engine.Scene = new NazarekSouth();
                         break;
                     case StOptions:
                         break;

@@ -54,6 +54,14 @@ namespace MyEngine
 
         #endregion
 
+        public void PopulateOneIndex(Tileset tileset, int[,] tiles, int offsetX = 0, int offsetY = 0)
+        {
+            for (int x = 0; x < tiles.GetLength(0) && x + offsetX < TilesX; x++)
+                for (int y = 0; y < tiles.GetLength(1) && y + offsetY < TilesY; y++)
+                    if (tiles[x, y] - 1 > 0)
+                        Tiles[x + offsetX, y + offsetY] = tileset[tiles[x, y] - 1];
+        }
+
         public void Populate(Tileset tileset, int[,] tiles, int offsetX = 0, int offsetY = 0)
         {
             for (int x = 0; x < tiles.GetLength(0) && x + offsetX < TilesX; x++)

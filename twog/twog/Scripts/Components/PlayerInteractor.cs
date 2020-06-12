@@ -23,7 +23,7 @@ namespace twog
 
         public bool Check(Entity other)
         {
-            if (MInput.Keyboard.Pressed(Keys.F))
+            if (MInput.Keyboard.Pressed(Keys.Space))
                 return Collide.Check(other, this);
             else
                 return false;

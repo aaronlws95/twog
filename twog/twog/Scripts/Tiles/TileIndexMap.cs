@@ -20,8 +20,14 @@ namespace twog
         {
             LoadJson(path);
             Name = tileJson.Name;
-            Indices = Calc.Transpose<int>(tileJson.Indices);
-            Collision = Calc.Transpose<bool>(tileJson.Collision);
+            Indices = Calc.Make2DArray<int>(tileJson.Indices, tileJson.Height, tileJson.Width);
+            Indices = Calc.Transpose<int>(Indices);
+            if (tileJson.Collision.GetLength(0) != 0)
+            {
+                Collision = Calc.Make2DArray<bool>(tileJson.Collision, tileJson.Height, tileJson.Width);
+                Collision = Calc.Transpose<bool>(Collision);
+            }
+                
         }
 
         private void LoadJson(string path)
@@ -36,8 +42,10 @@ namespace twog
         private class TileJson
         {
             public string Name { get; set; }
-            public int[,] Indices { get; set; }
-            public bool[,] Collision { get; set; }
+            public int Height { get; set; }
+            public int Width { get; set; }
+            public int[] Indices { get; set; }
+            public bool[] Collision { get; set; }
         }
     }
 }
