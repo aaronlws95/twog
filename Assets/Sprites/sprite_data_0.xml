@@ -1,0 +1,64 @@
+<Sprites>
+
+  <player path="player/" start="idle_0">
+    <Center/>
+    <Anim id="idle_0" path="idle_0" delay="0.5" goto="idle_1"/>
+    <Anim id="idle_1" path="idle_1" delay="0.5" goto="idle_0"/>
+    <Anim id="hurt_0" path="hurt_0" delay="0.2" goto="idle_0"/>
+  </player>
+
+  <aisya path="NPC/" start="idle_0">
+    <Anim id="idle_0" path="aisya_idle_0" delay="0.5" goto="idle_1"/>
+    <Anim id="idle_1" path="aisya_idle_1" delay="0.5" goto="idle_0"/>
+  </aisya>
+
+  <house_1 path="house/" start="default">
+    <Anim id="default" path="house_1"/>
+  </house_1>
+
+  <house_0 path="house/" start="default">
+    <Anim id="default" path="house_0"/>
+  </house_0>
+
+  <bullet_0 path="bullet/" start="default">
+    <Anim id="default" path="bullet_0"/>
+  </bullet_0>
+
+  <bullet_1 path="bullet/" start="default">
+    <Anim id="default" path="bullet_1"/>
+  </bullet_1>
+
+  <zaletos path="monster/" start="idle_0">
+    <Anim id="idle_0" path="zaletos_idle_0" delay="0.8" goto="idle_1"/>
+    <Anim id="idle_1" path="zaletos_idle_1" delay="0.2" goto="idle_0"/>
+    <Anim id="hurt_0" path="zaletos_hurt_0" delay="0.2" goto="idle_0"/>
+    <Anim id="dead_0" path="zaletos_dead_0"/>
+  </zaletos>
+
+  <healthbar_holder path="healthbar/" start="default">
+    <Anim id="default" path="holder"/>
+  </healthbar_holder>
+
+  <healthbar_bar path="healthbar/" start="default">
+    <Anim id="default" path="bar"/>
+  </healthbar_bar>
+
+  <start_button path="button/" start="default">
+    <Center/>
+    <Anim id="default" path="start"/>
+    <Anim id="selected" path="start_selected"/>
+  </start_button>
+
+  <options_button path="button/" start="default">
+    <Center/>
+    <Anim id="default" path="options"/>
+    <Anim id="selected" path="options_selected"/>
+  </options_button>
+
+  <exit_button path="button/" start="default">
+    <Center/>
+    <Anim id="default" path="exit"/>
+    <Anim id="selected" path="exit_selected"/>
+  </exit_button>
+
+</Sprites>

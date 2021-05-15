@@ -1,0 +1,145 @@
+{
+    "Dialogues" :
+    {
+        "SCENE1001AISYA" :
+        {
+            "Character" : "Aisya",
+            "Text" : "Please help me. I'm stuck here. I don't know where to go.",
+            "Options" : [
+                "Yes, I will help you.",
+                "No, I won't help you."
+            ],
+            "Paths" : [
+                "SCENE1003AISYA",
+                "SCENE1002AISYA"
+            ],
+            "CanEnd" : 0
+        },
+        "SCENE1002AISYA" :
+        {
+            "Character" : "Aisya",
+            "Text" : "So be it.",
+            "Options" : [],
+            "Paths" : [],
+            "CanEnd" : 1
+        },
+        "SCENE1003AISYA" :
+        {
+            "Character" : "Aisya",
+            "Text" : "Thanks, I need you to get me a key.",
+            "Options" : [
+                "What key?",
+                "Actually, nevermind."
+            ],
+            "Paths" : [
+                "SCENE1004AISYA",
+                "SCENE1002AISYA"
+            ],
+            "CanEnd" : 0
+        },
+        "SCENE1004AISYA" :
+        {
+            "Character" : "Aisya",
+            "Text" : "The key is in the mountains. That's all I can say.",
+            "Options" : [],
+            "Paths" : [],
+            "CanEnd" : 1
+        },
+        "SCENE0001INTRO" :
+        {
+            "Character" : "Intro",
+            "Text" : "Welcome to Nazarek. Hope you enjoy your stay.",
+            "Options" : [],
+            "Paths" : [],
+            "CanEnd" : 1
+        },
+        "LOCKED001DOOR" :
+        {
+            "Character" : "You",
+            "Text" : "This door is locked.",
+            "Options" : [],
+            "Paths" : [],
+            "CanEnd" : 1
+        },
+        "DEAD001PLAYER" :
+        {
+            "Character" : "Merik",
+            "Text" : "You are dead.",
+            "Options" : [],
+            "Paths" : [],
+            "CanEnd" : 1
+        },
+        "NAZSOUTH001INTRO" :
+        {
+            "Character" : "You",
+            "Text" : "Geez, I'm so hungry. It's been a week since I had a nice place to rest and some proper food.",
+            "Options" : ["next"],
+            "Paths" : ["NAZSOUTH002INTRO"],
+            "CanEnd" : 0
+        },
+        "NAZSOUTH002INTRO" :
+        {
+            "Character" : "You",
+            "Text" : "If I didn't lose my map to that Salacoa I'd be in Regiswald by now.",
+            "Options" : ["next"],
+            "Paths" : ["NAZSOUTH003INTRO"],
+            "CanEnd" : 0
+        },
+        "NAZSOUTH003INTRO" :
+        {
+            "Character" : "You",
+            "Text" : "...whatever I was lucky enough to get out of there with my nose intact.",
+            "Options" : ["next"],
+            "Paths" : ["NAZSOUTH004INTRO"],
+            "CanEnd" : 0
+        },
+        "NAZSOUTH004INTRO" :
+        {
+            "Character" : "You",
+            "Text" : "I quite like my nose.",
+            "Options" : ["next"],
+            "Paths" : ["NAZSOUTH005INTRO"],
+            "CanEnd" : 0
+        },
+        "NAZSOUTH005INTRO" :
+        {
+            "Character" : "You",
+            "Text" : "Looks like there's a town up north. I hope they have pie.",
+            "Options" : [],
+            "Paths" : [],
+            "CanEnd" : 1
+        },
+        "NAZSOUTH001TUTORIAL" :
+        {
+            "Character" : "TUTORIAL",
+            "Text" : "WASD to move.",
+            "Options" : ["next"],
+            "Paths" : ["NAZSOUTH002TUTORIAL"],
+            "CanEnd" : 0
+        },
+        "NAZSOUTH002TUTORIAL" :
+        {
+            "Character" : "TUTORIAL",
+            "Text" : "ARROW KEYS to fire.",
+            "Options" : ["next"],
+            "Paths" : ["NAZSOUTH003TUTORIAL"],
+            "CanEnd" : 0
+        },
+        "NAZSOUTH003TUTORIAL" :
+        {
+            "Character" : "TUTORIAL",
+            "Text" : "SPACE to interact and travel.",
+            "Options" : [],
+            "Paths" : [],
+            "CanEnd" : 1
+        },
+        "NAZSOUTH001SIGN" :
+        {
+            "Character" : "Sign",
+            "Text" : "Welcome to Nazarek! Hope you enjoy your stay.",
+            "Options" : [],
+            "Paths" : [],
+            "CanEnd" : 1
+        },
+    }
+}
