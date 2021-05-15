@@ -73,7 +73,7 @@ namespace twog
 
             // initialize player and scene
             Player = new Player(new Vector2(9 * 16, 12 * 16));
-            Scene = new Nazarek(); //MainMenu();
+            Scene = new MainMenu();
 
             // intro dialogue
             GameDialogue = new CoDialogue();

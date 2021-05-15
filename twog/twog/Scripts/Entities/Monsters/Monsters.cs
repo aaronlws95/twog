@@ -11,7 +11,7 @@ namespace twog
     [Tracked]
     public class Monsters : Entity
     {
-        public const int TOUCH_DMG = 1;
+        public int TouchDamage = 1;
 
         public Sprite Sprite;
         public int Health = 3;
@@ -82,10 +82,13 @@ namespace twog
                 {
                     // only knockback if not currently being knockbacked
                     if (Game1.Player.StateMachine.State != Player.StKnockback)
-                    {
-                        Game1.Player.Velocity = Calc.Sign(Center - Game1.Player.Position) * -KnockbackDistance;
-                        Game1.Player.StateMachine.State = Player.StKnockback;
-                        Game1.Player.Hurt(TOUCH_DMG);
+                    {                        
+                        if (Game1.Player.StateMachine.State != Player.StDead)
+                        {
+                            Game1.Player.Velocity = Calc.Sign(Center - Game1.Player.Position) * -KnockbackDistance;                           
+                            Game1.Player.Hurt(TouchDamage);
+                            Game1.Player.StateMachine.State = Player.StKnockback;
+                        }                                                    
                     }
                 }
             }
